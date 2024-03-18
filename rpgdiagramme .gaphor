@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.24.0">
+<StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>New model</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="7fe337ac-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="84ce2d80-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="87a31124-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</ownedType>
+</Package>
+<Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>New diagram</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="70b0ce3e-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="84cec01a-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="87a3a4c2-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="7fe3d1c6-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Class id="70aff2d4-e50b-11ee-b1c4-6030d4866b22">
+<name>
+<val>Character</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="dc5b314c-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="e078f764-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="e38b86ce-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="e6b82668-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="e9a6c226-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="ed4ccbaa-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="f04599b8-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="f41baf8c-e50b-11ee-b1c4-6030d4866b22"/>
+<ref refid="0fc86dce-e50c-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="70b0ce3e-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="70b0ce3e-e50b-11ee-b1c4-6030d4866b22">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 25.0, 192.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>386.0</val>
+</width>
+<height>
+<val>217.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</subject>
+</ClassItem>
+<Class id="84ce2d80-e50b-11ee-b1c4-6030d4866b22">
+<name>
+<val>Fight</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="40ba368c-e50d-11ee-b1c4-6030d4866b22"/>
+<ref refid="446bfad6-e50d-11ee-b1c4-6030d4866b22"/>
+<ref refid="488ccc6c-e50d-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="84cec01a-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="84cec01a-e50b-11ee-b1c4-6030d4866b22">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 31.0, 477.5)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>141.0</val>
+</width>
+<height>
+<val>100.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="84ce2d80-e50b-11ee-b1c4-6030d4866b22"/>
+</subject>
+</ClassItem>
+<Class id="87a31124-e50b-11ee-b1c4-6030d4866b22">
+<name>
+<val>GameManager</val>
+</name>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="87a3a4c2-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="87a3a4c2-e50b-11ee-b1c4-6030d4866b22">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 526.8512573242188, 443.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>106.0</val>
+</width>
+<height>
+<val>69.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="87a31124-e50b-11ee-b1c4-6030d4866b22"/>
+</subject>
+</ClassItem>
+<Property id="dc5b314c-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Attaque physique</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="e078f764-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Défense physique</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="e38b86ce-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Vitesse</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="e6b82668-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Points de vie max</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="e9a6c226-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Points de vie actuels</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+<Property id="ed4ccbaa-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>+ Peut blesser un adversaire (booléen)</val>
+</name>
+</Property>
+<Property id="f04599b8-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>+ Peut être soigné d'un pourcentage de sa vie (float)</val>
+</name>
+</Property>
+<Property id="f41baf8c-e50b-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>+ Peut être ressuscité avec un pourcentage de sa vie (float)</val>
+</name>
+</Property>
+<Property id="0fc86dce-e50c-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="70aff2d4-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>Nom</val>
+</name>
+<typeValue>
+<val>string</val>
+</typeValue>
+</Property>
+<ClassItem id="7fe3d1c6-e50b-11ee-b1c4-6030d4866b22">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 529.8512573242188, 197.05145263671875)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>149.0</val>
+</width>
+<height>
+<val>85.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="7fe337ac-e50b-11ee-b1c4-6030d4866b22"/>
+</subject>
+</ClassItem>
+<Class id="7fe337ac-e50b-11ee-b1c4-6030d4866b22">
+<name>
+<val>Menu</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="33efc52a-e50d-11ee-b1c4-6030d4866b22"/>
+<ref refid="38b7e20e-e50d-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="7fe3d1c6-e50b-11ee-b1c4-6030d4866b22"/>
+</reflist>
+</presentation>
+</Class>
+<Property id="33efc52a-e50d-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="7fe337ac-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>question</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+</Property>
+<Property id="38b7e20e-e50d-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="7fe337ac-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>options</val>
+</name>
+<typeValue>
+<val>List&lt;String&gt;</val>
+</typeValue>
+</Property>
+<Property id="40ba368c-e50d-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="84ce2d80-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>team1</val>
+</name>
+<typeValue>
+<val>List&lt;Entity&gt;</val>
+</typeValue>
+</Property>
+<Property id="446bfad6-e50d-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="84ce2d80-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>team2</val>
+</name>
+<typeValue>
+<val>List&lt;Entity&gt;</val>
+</typeValue>
+</Property>
+<Property id="488ccc6c-e50d-11ee-b1c4-6030d4866b22">
+<class_>
+<ref refid="84ce2d80-e50b-11ee-b1c4-6030d4866b22"/>
+</class_>
+<name>
+<val>turn</val>
+</name>
+<typeValue>
+<val>int</val>
+</typeValue>
+</Property>
+</gaphor>
