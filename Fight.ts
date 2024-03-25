@@ -8,4 +8,16 @@ class Fight {
         this.team2 = team2;
         this.currentTurn = 0;
     }
-}
+
+    start() {
+        while (!this.isGameOver()) {
+            const currentCharacter = this.getCurrentCharacter();
+            if (currentCharacter.isAlive()) {
+                currentCharacter.takeTurn();
+            }
+            this.nextTurn();
+        }
+        this.endGame();
+    }
+
+   
