@@ -30,8 +30,8 @@ class Menu {
     }
 }
 
-const question = "Quelle est votre couleur préférée ?";
-const options = ["Rouge", "Bleu", "Vert", "Jaune"];
+const question = "";
+const options = [""];
 const menu = new Menu(question, options);
 const response = menu.askQuestion();
 console.log(`Vous avez choisi: ${response}`);
