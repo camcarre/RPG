@@ -1,9 +1,9 @@
 class Fight {
-    private team1: Character[];
-    private team2: Character[];
+    private team1: gentil[boss ;];
+    private team2: mechant[];
     private currentTurn: number;
 
-    constructor(team1: Character[], team2: Character[]) {
+    constructor(team1: gentil[], team2: mechant[]) {
         this.team1 = team1;
         this.team2 = team2;
         this.currentTurn = 0;

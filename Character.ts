@@ -1,3 +1,5 @@
+
+
 class Character {
     name ="";
     attack = 0;
@@ -15,6 +17,7 @@ class Character {
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
+        this.health = health;
         this.pvmax = pvmax;
         this.pvcurrent = pvcurrent;
         this.hurt = hurt;
