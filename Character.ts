@@ -1,17 +1,31 @@
+
+
 class Character {
     name ="";
-    attack = 0;
-    defense =0;
-    speed =0;
-    pvmax =0;
-    pvcurrent =0;
+    attack: number;
+    defense : number;
+    speed: number;
+    pvmax: number;
+    pvcurrent: number;
+    health: number;
 
-    constructor(name :string, attack : number, defense :number, speed : number, pvmax : number, pvcurrent : number){
+
+    constructor(name :string, attack : number, defense :number, speed : number, pvmax : number, pvcurrent : number , health: number){
         this.name = name;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
+        this.health = health;
         this.pvmax = pvmax;
         this.pvcurrent = pvcurrent;
     }
+
+    isAlive(): boolean {
+        return this.health > 0;
+    }
+
+    takeTurn() {
+        
+    }
+
 }
