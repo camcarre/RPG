@@ -1,0 +1,18 @@
+class boss {
+    name = "Nécrosang le Seigneur des Ténèbres";
+    attack = 70;
+    defense = 30;
+    speed = 4;
+    pvmax = 300;
+    pvcurrent= 350;
+
+
+    constructor(name: string, attack : number, defense: number, speed: number, pvmax: number, pvcurrent: number, health: number) {
+        this.name = name;
+        this.attack = attack;
+        this.defense = defense;
+        this.speed = speed;
+        this.pvmax = pvmax;
+        this.pvcurrent = pvcurrent;
+    }
+}
