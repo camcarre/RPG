@@ -1,20 +1,10 @@
-class Voleur{
-    name: string = "Voleur";
-    attack: number = 50;
-    defense: number = 50;
-    speed: number = 10;
-    pvmax: number = 80;
-    pvcurrent: number =80;
+import Character from './Character';
 
-    constructor (name : string, attack : number, defense : number, speed : number, pvmax : number, pvcurrent : number) {
-        this.name = name;
-        this.attack = attack;
-        this.defense = defense;
-        this.speed = speed;
-        this.pvmax = pvmax;
-        this.pvcurrent;
+class Voleur extends Character {
+    constructor() {
+        super("voleur", 50, 50, 10, 80, 80);
     }
-    
+
     volerObjet(): string {
         const randomNumber = Math.random() * 100;
 
@@ -31,4 +21,5 @@ class Voleur{
         }
     }
 }
+
 export default Voleur;

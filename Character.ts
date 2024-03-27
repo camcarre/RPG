@@ -15,6 +15,9 @@ class Character {
         this.pvmax = pvmax;
         this.pvcurrent = pvcurrent;
     }
+    isAlive(): boolean {
+        return this.pvcurrent > 0;
+    }
 }
 
 export default Character;

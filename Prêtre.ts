@@ -1,18 +1,8 @@
-class Prêtre{
-    name: string = "Prêtre";
-    attack: number = 40;
-    defense: number = 20;
-    speed: number = 10;
-    pvmax: number = 80;
-    pvcurrent: number = 80;
+import Character from './Character';
 
-    constructor (name : string, attack : number, defense : number, speed : number, pvmax : number, pvcurrent : number, cure : number) {
-        this.name = name;
-        this.attack = attack;
-        this.defense = defense;
-        this.speed = speed;
-        this.pvmax = pvmax;
-        this.pvcurrent = pvcurrent;
+class Prêtre extends Character {
+    constructor() {
+        super("Prêtre", 40, 20, 10, 80, 80);
     }
 
     soigner(cible: Prêtre): void {
@@ -21,4 +11,5 @@ class Prêtre{
         console.log(`${this.name} utilise un sort de soin sur ${cible.name}. ${cible.name} récupère ${soin} points de vie.`);
     }
 }
+
 export default Prêtre;

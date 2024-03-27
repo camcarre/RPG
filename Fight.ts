@@ -1,10 +1,4 @@
-import Guerrier from './Guerrier';
-import Mage from './Mage';
-import Paladin from './Paladin';
-import Barbare from './Barbare';
-import Prêtre from './Prêtre';
-import Voleur from './Voleur';
-import Character from './Character';
+import Character from './Character.ts';
 
 class Fight {
     team1: Character[];
@@ -15,28 +9,54 @@ class Fight {
         this.team2 = team2;
     }
 
-    determineTurnOrder(): Character[] {
-        const allCharacters = this.team1.concat(this.team2);
-        return allCharacters.sort((a, b) => b.speed - a.speed);
+    addCharacterToTeam1(character: Character) {
+        this.team1.push(character);
     }
 
-    startFight() {
-        let turns = this.determineTurnOrder();
-        let isFightOver = false;
+    addCharacterToTeam2(character: Character) {
+        this.team2.push(character);
+    }
 
-        while (!isFightOver) {
-            for (const character of turns) {
-                if (character.pvcurrent > 0) {
-                    console.log(`${character.name}'s turn`);
+    announceMonsters() {
+        console.log("Monstres rencontrés dans l'arène :");
+        for (let i = 0; i < this.team2.length; i++) {
+            console.log(`${i + 1}. ${this.team2[i].name}`);
+        }
+        console.log("");
+    }
+
+    determineTurnOrder(team: Character[]): Character[] {
+        return team.sort((a, b) => b.speed - a.speed);
+    }
+
+    startCombat() {
+        console.log("Le combat commence !");
+        this.announceMonsters();
+
+        let currentTeam = this.team1;
+        let opponentTeam = this.team2;
+
+        while (true) {
+            const activeTeam = this.determineTurnOrder(currentTeam);
+            for (const character of activeTeam) {
+                if (character.isAlive()) {
+                    console.log(`C'est au tour de ${character.name} d'agir.`);
                 }
             }
-            
-            isFightOver = true;
+
+            if (opponentTeam.every(character => !character.isAlive())) {
+                console.log("L'équipe adverse est KO. Victoire !");
+                break;
+            } else if (currentTeam.every(character => !character.isAlive())) {
+                console.log("Votre équipe est KO. Game Over.");
+                break;
+            }
+
+            [currentTeam, opponentTeam] = [opponentTeam, currentTeam];
         }
     }
 }
+export default Fight;
 
-const team1 = [];
-const team2 = [];
-const fight = new Fight(team1, team2);
-fight.startFight();
+
+

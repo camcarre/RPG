@@ -1,21 +1,11 @@
-class Paladin{
-    name: string = "Paladin";
-    attack: number = 60;
+import Character from './Character';
+
+class Paladin extends Character {
     saintAttack: number;
-    defense: number = 90;
-    speed: number = 5;
-    pvmax: number = 80;
-    pvcurrent: number =80;
 
-
-    constructor (name : string, attack : number, saintattack : number, defense : number, speed : number, pvmax : number, pvcurrent : number) {
-        this.name = name;
-        this.attack = attack;
-        this.attack = saintattack;
-        this.defense = defense;
-        this.speed = speed;
-        this.pvmax = pvmax;
-        this.pvcurrent;
+    constructor(saintAttack : number) {
+        super("Paladin", 60, 90, 5, 80, 80);
+        this.saintAttack = saintAttack;
     }
 
     attaqueSainte(adversaires: Paladin[]): void {
@@ -26,5 +16,6 @@ class Paladin{
             console.log(`${adversaire.name} subit ${degats} dégâts.`);
         });
     }
-}  
+}
+
 export default Paladin;
