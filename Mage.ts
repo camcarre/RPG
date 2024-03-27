@@ -1,21 +1,29 @@
 class Mage{
-    name ="Mage";
-    manaattack = 30;
-    defense =30;
-    speed =5;
-    pvmax =90;
-    pvcurrent =90;
-    hurt =0;
-    cure =0;
-    resurrect =0;
+    name: string = "Mage";
+    attack: number = 30;
+    defense: number = 30;
+    speed: number =5;
+    mana: number = 90;
+    maxMana: number = 90;
 
-    constructor (name : string, manaattack : number, defense : number, speed : number, pvmax : number, pvcurrent : number) {
+    constructor (name : string, manaattack : number, defense : number, speed : number, mana : number, maxMana : number) {
         this.name = name;
-        this.manaattack = manaattack;
+        this.attack = manaattack;
         this.defense = defense;
         this.speed = speed;
-        this.pvmax = pvmax;
-        this.pvcurrent;
+        this.mana = maxMana;
+        this.maxMana = maxMana;
+    }
+
+    attaqueMagique(): void {
+        if (this.mana >= 20) {
+            console.log(`${this.name} lance une attaque magique !`);
+            console.log("L'attaque magique inflige des dégâts !");
+            this.mana -= 20;
+        } else {
+            console.log("Pas assez de mana pour lancer l'attaque magique !");
+        }
     }
 }  
+export default Mage;
     

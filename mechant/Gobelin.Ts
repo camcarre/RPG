@@ -1,10 +1,10 @@
-class gobelin {
-    name = "gobelin";
-    attack = 20;
-    defense = 10;
-    speed = 10;
-    pvmax = 50;
-    pvcurrent= 50;
+class Gobelin {
+    name: string = "gobelin";
+    attack: number = 20;
+    defense: number = 10;
+    speed: number = 10;
+    pvmax: number = 50;
+    pvcurrent: number = 50;
 
 
     constructor(name: string, attack : number, defense: number, speed: number, pvmax: number, pvcurrent: number, health: number) {
@@ -16,3 +16,4 @@ class gobelin {
         this.pvcurrent = pvcurrent;
     }
 }
+export default Gobelin;

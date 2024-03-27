@@ -1,10 +1,10 @@
 class Zombie {
-    name = "Zombie";
-    attack = 40;
-    defense = 10;
-    speed = 2;
-    pvmax = 60;
-    pvcurrent= 60;
+    name: string = "Zombie";
+    attack: number = 40;
+    defense: number = 10;
+    speed: number = 2;
+    pvmax: number = 60;
+    pvcurrent: number = 60;
 
 
     constructor(name: string, attack : number, defense: number, speed: number, pvmax: number, pvcurrent: number, health: number) {
@@ -16,3 +16,4 @@ class Zombie {
         this.pvcurrent = pvcurrent;
     }
 }
+export default Zombie;

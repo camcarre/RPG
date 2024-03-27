@@ -1,10 +1,10 @@
-class squelette {
-    name = "squelette";
-    attack = 40;
-    defense = 0;
-    speed = 5;
-    pvmax = 40;
-    pvcurrent= 40;
+class Squelette {
+    name: string = "squelette";
+    attack: number = 40;
+    defense: number = 0;
+    speed: number = 5;
+    pvmax: number = 40;
+    pvcurrent: number = 40;
 
 
     constructor(name: string, attack : number, defense: number, speed: number, pvmax: number, pvcurrent: number, health: number) {
@@ -16,3 +16,4 @@ class squelette {
         this.pvcurrent = pvcurrent;
     }
 }
+export default Squelette;

@@ -1,38 +1,29 @@
 class Menu {
     question: string;
     options: string[];
-    
+
     constructor(question: string, options: string[]) {
         this.question = question;
         this.options = options;
     }
 
-    askQuestion(): string {
+    displayAndGetChoice(): number {
         console.log(this.question);
         this.options.forEach((option, index) => {
             console.log(`${index + 1}. ${option}`);
         });
-
-        
-        return this.getUserChoice();
-    }
-
-    
-    private getUserChoice(): string {
-        const userInput = prompt("Votre choix: ");
-        const choice = parseInt(userInput);
-        if (!isNaN(choice) && choice >= 1 && choice <= this.options.length) {
-            return this.options[choice - 1];
-        } else {
-            console.log("Choix invalide. Veuillez entrer un numéro correspondant à une option.");
-            return this.getUserChoice();
+        let choice = parseInt(prompt("Choose an option: "));
+        while (isNaN(choice) || choice < 1 || choice > this.options.length) {
+            console.log("Invalid choice. Please choose again.");
+            choice = parseInt(prompt("Choose an option: "));
         }
+        return choice;
     }
 }
 
-const question = "";
-const options = [""];
-const menu = new Menu(question, options);
-const response = menu.askQuestion();
-console.log(`Vous avez choisi: ${response}`);
+
+const menu = new Menu("Choose your class:", ["Warrior", "Mage", "Paladin", "Barbarian", "Priest", "Thief"]);
+const choice = menu.displayAndGetChoice();
+console.log(`You chose: ${menu.options[choice - 1]}`);
+
 
