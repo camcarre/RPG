@@ -1,13 +1,13 @@
-import Character from './Character.ts';
+import Character from '../Character.ts';
 
-class Mage extends Character {
+ export default class Mage extends Character {
     mana: 90;
     maxMana: 90;
 
     constructor() {
         super("Mage", 30, 30, 5, 90, 90);
-        this.mana = mana; 
-        this.maxMana = maxMana; 
+        this.mana = this.mana; 
+        this.maxMana = this.maxMana; 
     }
 
     

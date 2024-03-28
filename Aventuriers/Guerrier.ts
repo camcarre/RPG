@@ -1,4 +1,4 @@
-import Character from './Character.ts';
+import Character from '../Character.ts';
 
 export default class Guerrier extends Character {
     constructor() {
