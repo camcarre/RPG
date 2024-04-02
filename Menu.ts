@@ -6,7 +6,7 @@ import Voleur from './Aventuriers/Voleur.ts';
 import Prêtre from './Aventuriers/Prêtre.ts';
 import Character from './Character.ts';
 
-class Choice {
+class Menu {
     private characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
     private myCharacters: Character[] = [];
 
@@ -18,7 +18,7 @@ class Choice {
 
         for (let i = 0; i < 3; i++) {
             const index = Number(await prompt('Entrez l\'indice du personnage que vous souhaitez sélectionner : '));
-            this.selectCharacter(index);
+            this.selectCharacter(index - 1);
         }
 
         console.log(this.getMyCharacters());
@@ -38,8 +38,18 @@ class Choice {
     }
 }
 
-const choice = new Choice();
+const choice = new Menu();
 choice.displayMenu();
 
-export default choice;
-export const myCharacters = choice.getMyCharacters();
+export function getSelectedCharacters(): Character[] {
+    return choice.getSelectedCharacters();
+}
+
+
+
+
+
+
+
+
+
