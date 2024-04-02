@@ -2,8 +2,8 @@ import Character from './Character.ts';
 import { getSelectedCharacters } from './Menu.ts';
 
 class Fight {
-    team1: Character[];
-    team2: Character[]; 
+    private team1: Character[];
+    private team2: Enemy[];
 
     constructor() {
         this.team1 = [];
@@ -14,17 +14,71 @@ class Fight {
         this.team1 = selectedCharacters;
     }
 
-    startCombat() {
+    calculateDamage(attacker: Character, target: Character): number {
+        let damage = attacker.attack - target.defense;
+        if (damage < 0) {
+            damage = 0;
+        }
+        target.pvcurrent -= damage;
+        if (target.pvcurrent <= 0) {
+            target.pvcurrent = 0;
+            target.isKO = true;
+        }
+        return damage;
+    }
+
+    async startCombat(selectedCharacters: Character[], enemies: Enemy[]) {
+        this.team1 = selectedCharacters;
+        this.team2 = enemies;
+
         console.log("Le combat commence !");
 
+        while (this.areTeamsAlive()) {
+            await this.takeTurns();
+        }
 
-        const selectedCharacters = getSelectedCharacters();
-        this.fillTeams(selectedCharacters);
+        if (this.team1.length === 0) {
+            console.log("L'équipe 2 a remporté la victoire !");
+        } else {
+            console.log("L'équipe 1 a remporté la victoire !");
+        }
+    }
 
+    private areTeamsAlive(): boolean {
+        return this.team1.length > 0 && this.team2.length > 0;
+    }
+
+    private async takeTurns() {
+        this.team1.sort((a, b) => b.speed - a.speed);
+        this.team2.sort((a, b) => b.speed - a.speed);
+
+        for (const character of this.team1) {
+            if (this.team2.length === 0) break;
+            await this.attack(character, this.team2);
+        }
+
+        for (const enemy of this.team2) {
+            if (this.team1.length === 0) break;
+            await this.attack(enemy, this.team1);
+        }
+    }
+
+    private async attack(attacker: Character | Enemy, targets: (Character | Enemy)[]) {
+        const target = targets[0]; 
+
+        console.log(`${attacker.name} attaque ${target.name} !`);
+
+        if (target.pvcurrent <= 0) {
+            console.log(`${target.name} est K.O.`);
+            targets.splice(0, 1);
+        }
     }
 }
 
 export default Fight;
+
+
+
 
 
 
