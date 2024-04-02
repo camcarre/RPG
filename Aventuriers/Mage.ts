@@ -21,4 +21,3 @@ import Character from '../Character.ts';
         }
     }
 }
-    

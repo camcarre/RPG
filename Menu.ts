@@ -8,7 +8,7 @@ import Character from './Character.ts';
 
 class Choice {
     private characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
-    private selectedCharacters: Character[] = [];
+    private myCharacters: Character[] = [];
 
     async displayMenu() {
         this.characters.forEach((character, index) => {
@@ -21,20 +21,20 @@ class Choice {
             this.selectCharacter(index);
         }
 
-        console.log(this.getSelectedCharacters());
+        console.log(this.getMyCharacters());
     }
 
     selectCharacter(index: number) {
         if (index >= 0 && index < this.characters.length) {
-            this.selectedCharacters.push(this.characters[index]);
+            this.myCharacters.push(this.characters[index]);
             console.log(`${this.characters[index].name} a été sélectionné.`);
         } else {
             console.log("Index invalide.");
         }
     }
 
-    getSelectedCharacters() {
-        return this.selectedCharacters;
+    getMyCharacters() {
+        return this.myCharacters;
     }
 }
 
@@ -42,9 +42,4 @@ const choice = new Choice();
 choice.displayMenu();
 
 export default choice;
-
-
-
-
-
-
+export const myCharacters = choice.getMyCharacters();
