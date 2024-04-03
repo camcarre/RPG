@@ -1,66 +1,47 @@
-import Boss from './Méchants/Boss.ts';
-import Geant from './Méchants/Geant.ts';
-import Gobelin from './Méchants/Gobelin.ts';
-import Sorcier from './Méchants/Sorcier.ts';
-import Squelette from './Méchants/Squelette.ts';
-import Zombie from './Méchants/Zombie.ts';
-import Menu from './Menu.ts';
-import Fight from './Fight.ts';
+import Barbare from './Aventuriers/Barbare.ts';
+import Mage from './Aventuriers/Mage.ts';
+import Paladin from './Aventuriers/Paladin.ts';
+import Guerrier from './Aventuriers/Guerrier.ts';
+import Voleur from './Aventuriers/Voleur.ts';
+import Prêtre from './Aventuriers/Prêtre.ts';
 import Character from './Character.ts';
 
+
 class GameManager {
-    private menu: Menu;
-    private fight: Fight;
-    private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
+    private characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
+    private myCharacters: Character[] = [];
 
-    constructor() {
-        this.menu = new Menu();
-        this.fight = new Fight();
-        this.ennemis = [];
-        this.initializeEnemies();
-    }
-
-    initializeEnemies() {
-        this.addEnnemi(new Squelette());
-        this.addEnnemi(new Boss());
-        this.addEnnemi(new Sorcier());
-        this.addEnnemi(new Gobelin());
-        this.addEnnemi(new Zombie());
-        this.addEnnemi(new Geant());
-    }
-
-    addEnnemi(ennemi: Boss | Gobelin | Sorcier | Squelette | Zombie | Geant) {
-        this.ennemis.push(ennemi);
-    }
-
-    async startGame() {
-        await this.menu.displayMenu();
-
-        const selectedCharacters: Character[] = this.menu.getSelectedCharacters();
-        const selectedEnemies = this.selectRandomEnemies();
-
-        await this.fight.startCombat(selectedCharacters, selectedEnemies);
-    }
-
-    private selectRandomEnemies(): (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
-        const selectedEnemies: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
-        const availableEnemies = this.ennemis.slice();
+    async displayMenu() {
+        this.characters.forEach((character, index) => {
+            console.log(`${index + 1}. ${character.name}`);
+            console.log(`Attack: ${character.attack}, Defense: ${character.defense}, Speed: ${character.speed}, PV Max: ${character.pvmax}, PV Current: ${character.pvcurrent}`);
+        });
 
         for (let i = 0; i < 3; i++) {
-            const randomIndex = Math.floor(Math.random() * availableEnemies.length);
-            const randomEnemy = availableEnemies.splice(randomIndex, 1)[0];
-            selectedEnemies.push(randomEnemy);
+            const index = Number(await prompt('Entrez l\'indice du personnage que vous souhaitez sélectionner : '));
+            this.selectCharacter(index - 1);
         }
 
-        return selectedEnemies;
+        console.log(this.getMyCharacters());
     }
+
+    selectCharacter(index: number) {
+        if (index >= 0 && index < this.characters.length) {
+            this.myCharacters.push(this.characters[index]);
+            console.log(`${this.characters[index].name} a été sélectionné.`);
+        } else {
+            console.log("Index invalide.");
+        }
+    }
+
+    getMyCharacters() {
+        return this.myCharacters;
+    }
+
+    
 }
 
 const gameManager = new GameManager();
-gameManager.startGame();
+gameManager.displayMenu();
 
 export default gameManager;
-
-
-
-

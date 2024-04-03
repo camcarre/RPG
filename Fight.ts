@@ -1,10 +1,10 @@
-import { selectedCharacters } from './GameManager.ts';
-import { myCharacters } from './menu';
 import Character from './Character.ts';
 import gameManager from './GameManager.ts';
 import { getSelectedCharacters } from './Menu.ts';
 
 class Fight {
+
+
     private team1: Character[];
     private team2: Character[];
 
@@ -80,15 +80,3 @@ class Fight {
 }
 
 export default Fight;
-
-
-
-
-
-
-
-
-
-
-
-
