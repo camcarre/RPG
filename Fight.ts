@@ -1,11 +1,11 @@
-import { selectedCharacters } from './aleatoiremechant';
+import { selectedCharacters } from './GameManager.ts';
 import { myCharacters } from './menu';
 import Character from './Character.ts';
 import { getSelectedCharacters } from './Menu.ts';
 
 class Fight {
     private team1: Character[];
-    private team2: Enemy[];
+    private team2: Character[]; // Change the type to Character[]
 
     constructor() {
         this.team1 = [];
@@ -29,7 +29,7 @@ class Fight {
         return damage;
     }
 
-    async startCombat(selectedCharacters: Character[], enemies: Enemy[]) {
+    async startCombat(selectedCharacters: Character[], enemies: Character[]) { // Change the type to Character[]
         this.team1 = selectedCharacters;
         this.team2 = enemies;
 
@@ -78,13 +78,3 @@ class Fight {
 }
 
 export default Fight;
-
-
-
-
-
-
-
-
-
-
