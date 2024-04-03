@@ -6,7 +6,7 @@ import Voleur from './Aventuriers/Voleur.ts';
 import Prêtre from './Aventuriers/Prêtre.ts';
 import Character from './Character.ts';
 
-class Menu {
+export default class Menu {
     private characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
     private myCharacters: Character[] = [];
 

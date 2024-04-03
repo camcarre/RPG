@@ -1,11 +1,12 @@
 import { selectedCharacters } from './GameManager.ts';
 import { myCharacters } from './menu';
 import Character from './Character.ts';
+import gameManager from './GameManager.ts';
 import { getSelectedCharacters } from './Menu.ts';
 
 class Fight {
     private team1: Character[];
-    private team2: Character[]; // Change the type to Character[]
+    private team2: Character[];
 
     constructor() {
         this.team1 = [];
@@ -14,6 +15,7 @@ class Fight {
 
     fillTeams(selectedCharacters: Character[]) {
         this.team1 = selectedCharacters;
+        this.team2 = gameManager.exportSelectedEnemies();
     }
 
     calculateDamage(attacker: Character, target: Character): number {
@@ -29,7 +31,7 @@ class Fight {
         return damage;
     }
 
-    async startCombat(selectedCharacters: Character[], enemies: Character[]) { // Change the type to Character[]
+    async startCombat(selectedCharacters: Character[], enemies: Character[]) {
         this.team1 = selectedCharacters;
         this.team2 = enemies;
 
@@ -59,13 +61,13 @@ class Fight {
             await this.attack(character, this.team2);
         }
 
-        for (const enemy of this.team2) {
+        for (const character of this.team2) {
             if (this.team1.length === 0) break;
-            await this.attack(enemy, this.team1);
+            await this.attack(character, this.team1);
         }
     }
 
-    private async attack(attacker: Character | Enemy, targets: (Character | Enemy)[]) {
+    private async attack(attacker: Character, targets: Character[]) {
         const target = targets[0]; 
 
         console.log(`${attacker.name} attaque ${target.name} !`);
@@ -78,3 +80,15 @@ class Fight {
 }
 
 export default Fight;
+
+
+
+
+
+
+
+
+
+
+
+
