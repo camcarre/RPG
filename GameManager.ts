@@ -1,20 +1,23 @@
+import Barbare from './Aventuriers/Barbare.ts';
+import Mage from './Aventuriers/Mage.ts';
+import Paladin from './Aventuriers/Paladin.ts';
+import Guerrier from './Aventuriers/Guerrier.ts';
+import Voleur from './Aventuriers/Voleur.ts';
+import Prêtre from './Aventuriers/Prêtre.ts';
 import Boss from './Méchants/Boss.ts';
 import Geant from './Méchants/Geant.ts';
 import Gobelin from './Méchants/Gobelin.ts';
 import Sorcier from './Méchants/Sorcier.ts';
 import Squelette from './Méchants/Squelette.ts';
 import Zombie from './Méchants/Zombie.ts';
-import Menu from './Menu.ts';
 import Fight from './Fight.ts';
 import Character from './Character.ts';
 
 class GameManager {
-    private menu: Menu;
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
 
     constructor() {
-        this.menu = new Menu();
         this.fight = new Fight();
         this.ennemis = [];
         this.initializeEnemies();
@@ -33,13 +36,32 @@ class GameManager {
         this.ennemis.push(ennemi);
     }
 
-    async startGame() {
-        await this.menu.displayMenu();
-
-        const selectedCharacters: Character[] = this.menu.getSelectedCharacters();
+    startGame() {
+        const selectedCharacters: Character[] = this.selectCharacters();
         const selectedEnemies = this.selectRandomEnemies();
 
-        await this.fight.startCombat(selectedCharacters, selectedEnemies);
+        this.fight.startCombat(selectedCharacters, selectedEnemies).then(() => {
+            console.log('Combat terminé.');
+        }).catch(error => {
+            console.error('Une erreur est survenue pendant le combat :', error);
+        });
+    }
+
+    private selectCharacters(): Character[] {
+        const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
+        const selectedCharacters: Character[] = [];
+
+        console.log("Sélectionnez 3 personnages pour votre équipe :");
+        for (let i = 0; i < 3; i++) {
+            let index;
+            do {
+                index = Number(prompt('Entrez l\'indice du personnage que vous souhaitez sélectionner : '));
+            } while (index < 1 || index > 6); 
+            selectedCharacters.push(characters[index - 1]);
+            console.log(`${characters[index - 1].name} a été sélectionné.`);
+        }
+
+        return selectedCharacters;
     }
 
     private selectRandomEnemies(): (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
@@ -60,6 +82,13 @@ const gameManager = new GameManager();
 gameManager.startGame();
 
 export default gameManager;
+
+
+
+
+
+
+
 
 
 
