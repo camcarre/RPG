@@ -2,82 +2,101 @@ import Character from './Character.ts';
 import gameManager from './GameManager.ts';
 import { getSelectedCharacters } from './Menu.ts';
 
+
+enum Action {
+    Attack = 'Attaquer',
+    Defend = 'Se Défendre'
+}
+
 class Fight {
-    private team1: Character[];
-    private team2: Character[];
+    async startCombat(players: Character[], enemies: Character[]) {
+        console.log('Le combat commence !');
 
-    constructor() {
-        this.team1 = [];
-        this.team2 = [];
-    }
+        while (players.length > 0 && enemies.length > 0) {
+            for (let i = 0; i < players.length; i++) {
+                const player = players[i];
+                const action = await this.chooseAction(player);
 
-    fillTeams(selectedCharacters: Character[]) {
-        this.team1 = selectedCharacters;
-        this.team2 = gameManager.exportSelectedEnemies();
-    }
+                switch (action) {
+                    case Action.Attack:
+                        const enemyTarget = await this.chooseTarget(enemies);
+                        this.attack(player, enemyTarget);
+                        if (enemyTarget.pvcurrent <= 0) {
+                            console.log(`${enemyTarget.name} a été vaincu !`);
+                            enemies.splice(enemies.indexOf(enemyTarget), 1);
+                        }
+                        if (enemies.length === 0) {
+                            console.log('Les ennemis ont été vaincus. Vous avez gagné !');
+                            return;
+                        }
+                        break;
+                    case Action.Defend:
+                        player.defend();
+                        break;
+                }
+            }
 
-    calculateDamage(attacker: Character, target: Character): number {
-        let damage = attacker.attack - target.defense;
-        if (damage < 0) {
-            damage = 0;
-        }
-        target.pvcurrent -= damage;
-        if (target.pvcurrent <= 0) {
-            target.pvcurrent = 0;
-            target.isKO = true;
-        }
-        return damage;
-    }
-
-    async startCombat(selectedCharacters: Character[], enemies: Character[]) {
-        this.team1 = selectedCharacters;
-        this.team2 = enemies;
-
-        console.log("Le combat commence !");
-
-        while (this.areTeamsAlive()) {
-            await this.takeTurns();
-        }
-
-        if (this.team1.length === 0) {
-            console.log("L'équipe 2 a remporté la victoire !");
-        } else {
-            console.log("L'équipe 1 a remporté la victoire !");
-        }
-    }
-
-    private areTeamsAlive(): boolean {
-        return this.team1.length > 0 && this.team2.length > 0;
-    }
-
-    private async takeTurns() {
-        this.team1.sort((a, b) => b.speed - a.speed);
-        this.team2.sort((a, b) => b.speed - a.speed);
-
-        for (const character of this.team1) {
-            if (this.team2.length === 0) break;
-            await this.attack(character, this.team2);
-        }
-
-        for (const character of this.team2) {
-            if (this.team1.length === 0) break;
-            await this.attack(character, this.team1);
+            for (let i = 0; i < enemies.length; i++) {
+                const enemy = enemies[i];
+                const playerTarget = this.chooseTarget(players);
+                this.attack(enemy, playerTarget);
+                if (playerTarget.pvcurrent <= 0) {
+                    console.log(`${playerTarget.name} a été vaincu !`);
+                    players.splice(players.indexOf(playerTarget), 1);
+                }
+                if (players.length === 0) {
+                    console.log('Tous vos personnages ont été vaincus. Vous avez perdu...');
+                    return;
+                }
+            }
         }
     }
 
-    private async attack(attacker: Character, targets: Character[]) {
-        const target = targets[0]; 
+    private async chooseAction(player: Character): Promise<Action> {
+        let choice;
+        do {
+            choice = prompt(`${player.name}, que souhaitez-vous faire ? (${Action.Attack} / ${Action.Defend}) : `);
+        } while (![Action.Attack, Action.Defend].includes(choice));
+        return choice as Action;
+    }
 
+    private async chooseTarget(targets: Character[]): Promise<Character> {
+        let choice;
+        do {
+            const targetIndex = Number(prompt(`Choisissez une cible en entrant l'indice (1-${targets.length}): `)) - 1;
+            choice = targets[targetIndex];
+        } while (!choice);
+        return choice;
+    }
+
+    private attack(attacker: Character, target: Character) {
         console.log(`${attacker.name} attaque ${target.name} !`);
+        const damage = Math.max(attacker.attack - target.defense, 0);
+        target.pvcurrent -= damage;
+        console.log(`${target.name} perd ${damage} points de vie.`);
+    }
 
-        if (target.pvcurrent <= 0) {
-            console.log(`${target.name} est K.O.`);
-            targets.splice(0, 1);
+    private enemyTurn(enemy: Character, players: Character[]) {
+        if (Math.random() < 0.2) {
+            let lowestHealthPlayer = players[0];
+            for (let i = 1; i < players.length; i++) {
+                if (players[i].pvcurrent < lowestHealthPlayer.pvcurrent) {
+                    lowestHealthPlayer = players[i];
+                }
+            }
+            this.attack(enemy, lowestHealthPlayer);
+        } else {
+            const randomPlayer = players[Math.floor(Math.random() * players.length)];
+            this.attack(enemy, randomPlayer);
         }
     }
 }
 
 export default Fight;
+
+
+
+
 
 
 
