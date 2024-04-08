@@ -34,6 +34,7 @@ class Fight {
               break;
             default:
               break;
+
           }
           if (this.team2.length === 0) {
             console.log("Team 1 wins!");

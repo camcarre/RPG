@@ -14,7 +14,7 @@ class Character {
         this.speed = speed;
         this.pvmax = pvmax;
         this.pvcurrent = pvcurrent;
-    }
+    })
 }
 
 export default Character;
