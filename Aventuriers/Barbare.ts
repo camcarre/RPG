@@ -1,27 +1,17 @@
-class Barbare{
-    name: string = "Barbare";
-    attack: number = 100;
-    defense: number = 20;
-    speed: number = 5;
-    pvmax: number = 80;
-    pvcurrent: number = 80;
+import Character from '../Character.ts';
 
-    constructor (name : string, attack : number, defense : number, speed : number, pvmax : number, pvcurrent : number, hurt : number){
-        this.name = name;
-        this.attack = attack;
-        this.defense = defense;
-        this.speed = speed;
-        this.pvmax = pvmax;
-        this.pvcurrent;
+export default class Barbare extends Character {
+    constructor() {
+        super("Barbare", 100, 20, 5, 80, 80);
     }
 
-    attaqueBerserk(adversaires: any[]): void {
+    attaqueBerserk(adversaires: Character[]): void {
         if (adversaires.length === 0) {
             console.log("Aucun ennemi à attaquer !");
             return;
         }
 
-        const randomIndex = Math.floor(Math.random() * adversaires.length); // Sélectionner un ennemi au hasard
+        const randomIndex = Math.floor(Math.random() * adversaires.length);
         const ennemi = adversaires[randomIndex];
 
         const degats = Math.max(0, (this.attack - ennemi.defense) * 1.3);
@@ -34,5 +24,4 @@ class Barbare{
         console.log(`${ennemi.name} subit ${degats} dégâts.`);
         console.log(`${this.name} se blesse de ${selfDamage} dégâts.`);
     }
-} 
-export default Barbare;
+}
