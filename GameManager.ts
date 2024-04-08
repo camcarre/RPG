@@ -52,6 +52,10 @@ class GameManager {
         const selectedCharacters: Character[] = [];
 
         console.log("Sélectionnez 3 personnages pour votre équipe :");
+        characters.forEach((character, index) => {
+            console.log(`${index + 1}. ${character.name}`);
+        });
+
         for (let i = 0; i < 3; i++) {
             let index;
             do {
