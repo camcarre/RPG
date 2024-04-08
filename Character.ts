@@ -18,13 +18,6 @@ class Character {
         this.isKO = false;
     }
 
-    displayStats() {
-        console.log(`Nom: ${this.name}`);
-        console.log(`PV actuels: ${this.pvcurrent}`);
-        console.log(`Attaque: ${this.attack}`);
-        console.log(`Défense: ${this.defense}`);
-        console.log(`Vitesse: ${this.speed}`);
-    }
 
     takeDamage(attacker: Character) {
         if (attacker.attack > this.defense) {
