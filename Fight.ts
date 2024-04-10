@@ -48,7 +48,7 @@ private clearScreen: string = "\x1b[2J\x1b[0;0H";
                     
             }
 
-            const playerTarget = menu.chooseTarget(players);
+            const playerTarget = menu.monsterTurn(players);
             this.attack(currentEnemy, playerTarget);
             if (playerTarget.pvcurrent <= 0) {
                 console.log(`\x1b[31m${playerTarget.name} a été vaincu !\x1b[0m`);

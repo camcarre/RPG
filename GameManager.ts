@@ -31,7 +31,6 @@ class GameManager {
         this.menu = new Menu();
         this.initializeEnemies();
         this.selectedCharacters = this.selectCharacters();
-
     }
 
     initializeEnemies() {
@@ -47,7 +46,6 @@ class GameManager {
     }
 
     startGame() {
-        console.log("Bienvenue dans notre RPG!");
         this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
     }
 
@@ -146,6 +144,7 @@ private fightBoss = (): Promise<void> => {
         const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
         const selectedCharacters: Character[] = [];
 
+        console.log("\x1b[34mBienvenue dans le jeu !\x1b[0m");
         console.log("\x1b[34mSélectionnez 3 personnages pour votre équipe :\x1b[0m");
         characters.forEach((character, index) => {
             console.log(`${index + 1}. ${character.name}`);
