@@ -15,30 +15,34 @@ import Character from './Character.ts';
 import Menu from './Menu.ts';
 
 
+
 class GameManager {
     private clearScreen: string = "\x1b[2J\x1b[0;0H";
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
     private menu: Menu;
     private combatCount = 0;
+    private selectedCharacters: Character[];
+
 
     constructor() {
         this.fight = new Fight();
         this.ennemis = [];
         this.menu = new Menu();
         this.initializeEnemies();
+        this.selectedCharacters = this.selectCharacters();
+
     }
 
     initializeEnemies() {
         this.addEnnemi(new Squelette());
-        this.addEnnemi(new Boss());
         this.addEnnemi(new Sorcier());
         this.addEnnemi(new Gobelin());
         this.addEnnemi(new Zombie());
         this.addEnnemi(new Geant());
     }
 
-    addEnnemi(ennemi: Boss | Gobelin | Sorcier | Squelette | Zombie | Geant) {
+    addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
         this.ennemis.push(ennemi);
     }
 
@@ -74,32 +78,51 @@ private enterRoom = () => {
         //coffre
     }
 
-    private randomCombat = (): Promise<void> => {
-        return new Promise((resolve, reject) => {
-            const selectedCharacters: Character[] = this.selectCharacters();
-            const selectedEnemies = this.selectRandomEnemies();
+private randomCombat = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        const selectedEnemies = this.selectRandomEnemies();
 
-            this.fight.startCombat(selectedCharacters, selectedEnemies, this.menu)
-                .then(() => {
-                    console.log('Combat terminé.');
-                    resolve();
-                    console.log(this.clearScreen);
-                })
-                .catch(error => {
-                    console.error('Une erreur est survenue pendant le combat :', error);
-                    reject(error);
-                });
-        });
-    }
-
-    private fightBoss(): Boss[] {
-        const selectedEnemies: Boss[] = [];
-        const availableEnemies = Array(3).fill(new Boss());
-        console.log(this.clearScreen);
-    
-    return selectedEnemies;
-    
+        this.fight.startCombat(this.selectedCharacters, selectedEnemies, this.menu)
+            .then(() => {
+                console.log('Combat terminé.');
+                resolve();
+                console.log(this.clearScreen);
+            })
+            .catch(error => {
+                console.error('Une erreur est survenue pendant le combat :', error);
+                reject(error);
+            });
+    });
 }
+
+private fightBoss = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        const boss = new Boss(); 
+
+        this.fight.startCombat(this.selectedCharacters, [boss], this.menu)
+            .then(() => {
+                this.printWin();
+                resolve();
+            })
+            .catch(error => {
+                console.error('Une erreur est survenue pendant le combat :', error);
+                reject(error);
+            });
+    });
+}
+    
+    
+    private printWin(): void {
+        console.log(`
+        __   __  ___   __      _____  ___   
+        |"  |/  \\|  "| |" \\    (\\"   \\|"  \\  
+        |'  /    \\:  | ||  |   |.\\\\   \\    | 
+        |: /'        | |:  |   |: \\.   \\\\  | 
+        \\\\//  /'    | |.  |   |.  \\    \\. | 
+        /   /  \\\\   | /\\  |\\  |    \\    \\ | 
+        |___/    \\___|(__\\_|_)  \\___|\\____\\) 
+        `);
+    }
 
     private quit = () => {
         console.log("Vous avez choisi d'arrêter le jeu");
@@ -152,8 +175,10 @@ private enterRoom = () => {
 
         return selectedEnemies;
     }
+
     
 }
+
 
 const gameManager = new GameManager();
 gameManager.startGame();
