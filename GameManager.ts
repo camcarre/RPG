@@ -16,6 +16,7 @@ import Menu from './Menu.ts';
 
 
 class GameManager {
+    private clearScreen: string = "\x1b[2J\x1b[0;0H";
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
     private menu: Menu;
@@ -59,6 +60,8 @@ private enterRoom = () => {
     } else if (this.combatCount === 5) {
         this.fightBoss();
     }
+    console.log(this.clearScreen);
+    
 }
 
     private gameLoop = () => {
@@ -80,6 +83,7 @@ private enterRoom = () => {
                 .then(() => {
                     console.log('Combat terminé.');
                     resolve();
+                    console.log(this.clearScreen);
                 })
                 .catch(error => {
                     console.error('Une erreur est survenue pendant le combat :', error);
@@ -91,8 +95,10 @@ private enterRoom = () => {
     private fightBoss(): Boss[] {
         const selectedEnemies: Boss[] = [];
         const availableEnemies = Array(3).fill(new Boss());
-        
+        console.log(this.clearScreen);
+    
     return selectedEnemies;
+    
 }
 
     private quit = () => {
@@ -146,6 +152,7 @@ private enterRoom = () => {
 
         return selectedEnemies;
     }
+    
 }
 
 const gameManager = new GameManager();
