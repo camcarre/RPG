@@ -19,6 +19,7 @@ class GameManager {
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
     private menu: Menu;
+    private combatCount = 0;
 
     constructor() {
         this.fight = new Fight();
@@ -41,14 +42,75 @@ class GameManager {
     }
 
     startGame() {
-        const selectedCharacters: Character[] = this.selectCharacters();
-        const selectedEnemies = this.selectRandomEnemies();
-    
-        this.fight.startCombat(selectedCharacters, selectedEnemies, this.menu).then(() => {
-            console.log('Combat terminé.');
-        }).catch(error => {
-            console.error('Une erreur est survenue pendant le combat :', error);
+        console.log("Bienvenue dans notre RPG!");
+        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+    }
+
+private enterRoom = () => {
+    console.log("Vous entrez dans une salle.");
+    this.combatCount++;
+    if (this.combatCount === 1 || this.combatCount === 3) {
+        this.randomCombat().then(() => {
+            this.gameLoop();
         });
+    } else if (this.combatCount === 2 || this.combatCount === 4) {
+        this.openChest();
+        this.gameLoop();
+    } else if (this.combatCount === 5) {
+        this.fightBoss();
+    }
+}
+
+    private gameLoop = () => {
+        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+    }
+    
+
+    private openChest = () => {
+        console.log("Vous trouvez un coffre !");
+        //coffre
+    }
+
+    private randomCombat = (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            const selectedCharacters: Character[] = this.selectCharacters();
+            const selectedEnemies = this.selectRandomEnemies();
+
+            this.fight.startCombat(selectedCharacters, selectedEnemies, this.menu)
+                .then(() => {
+                    console.log('Combat terminé.');
+                    resolve();
+                })
+                .catch(error => {
+                    console.error('Une erreur est survenue pendant le combat :', error);
+                    reject(error);
+                });
+        });
+    }
+
+    private fightBoss(): Boss[] {
+        const selectedEnemies: Boss[] = [];
+        const availableEnemies = Array(3).fill(new Boss());
+        
+    return selectedEnemies;
+}
+
+    private quit = () => {
+        console.log("Vous avez choisi d'arrêter le jeu");
+        console.log("Le jeu est terminé.");
+        Deno.exit();
+    }
+
+    private makeChoice(promptMessage: string, action1: () => void, action2: () => void) {
+        const choice = prompt(promptMessage);
+        if (choice === "1") {
+            action1();
+        } else if (choice === "2") {
+            action2();
+        } else {
+            console.log("Choix invalide. Veuillez choisir entre 1 et 2.");
+            this.makeChoice(promptMessage, action1, action2);
+        }
     }
 
     private selectCharacters(): Character[] {
@@ -72,8 +134,8 @@ class GameManager {
         return selectedCharacters;
     }
 
-    private selectRandomEnemies(): (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
-        const selectedEnemies: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
+    private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
+        const selectedEnemies: (Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
         const availableEnemies = this.ennemis.slice();
 
         for (let i = 0; i < 3; i++) {
@@ -84,16 +146,12 @@ class GameManager {
 
         return selectedEnemies;
     }
-
-    
 }
 
 const gameManager = new GameManager();
-gameManager.displayMenu();
+gameManager.startGame();
 
 export default gameManager;
-
-
 
 
 
