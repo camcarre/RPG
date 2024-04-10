@@ -43,12 +43,12 @@ class GameManager {
     }
 
     startGame() {
-        console.log("Bienvenue dans notre RPG!");
-        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+        console.log("\n\x1b[32mBienvenue dans notre RPG!\x1b[0m");
+        this.makeChoice("\x1b[34mVoulez-vous entrer dans une salle ? ou arrêter le jeu ?\x1b[0m", this.enterRoom, this.quit);
     }
 
 private enterRoom = () => {
-    console.log("Vous entrez dans une salle.");
+    console.log("\n\x1b[32mVous entrez dans une salle.\x1b[0m");
     this.combatCount++;
     if (this.combatCount === 1 || this.combatCount === 3) {
         this.randomCombat().then(() => {
@@ -65,12 +65,12 @@ private enterRoom = () => {
 }
 
     private gameLoop = () => {
-        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+        this.makeChoice("\n\x1b[34mVoulez-vous entrer dans une salle ? ou arrêter le jeu ?\x1b[0m", this.enterRoom, this.quit);
     }
     
 
     private openChest = () => {
-        console.log("Vous trouvez un coffre !");
+        console.log("\n\x1b[33mVous trouvez un coffre !\x1b[0m");
         //coffre
     }
 
@@ -81,7 +81,7 @@ private enterRoom = () => {
 
             this.fight.startCombat(selectedCharacters, selectedEnemies, this.menu)
                 .then(() => {
-                    console.log('Combat terminé.');
+                    console.log('\n\x1b[32mCombat terminé.\x1b[0m');
                     resolve();
                     console.log(this.clearScreen);
                 })
@@ -102,8 +102,8 @@ private enterRoom = () => {
 }
 
     private quit = () => {
-        console.log("Vous avez choisi d'arrêter le jeu");
-        console.log("Le jeu est terminé.");
+        console.log("\n\x1b[32mVous avez choisi d'arrêter le jeu\x1b[0m");
+        console.log("\x1b[32mLe jeu est terminé.\x1b[0m");
         Deno.exit();
     }
 
