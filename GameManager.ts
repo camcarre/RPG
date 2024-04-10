@@ -12,15 +12,18 @@ import Squelette from './Méchants/Squelette.ts';
 import Zombie from './Méchants/Zombie.ts';
 import Fight from './Fight.ts';
 import Character from './Character.ts';
+import Menu from './Menu.ts';
 
 
 class GameManager {
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
+    private menu: Menu;
 
     constructor() {
         this.fight = new Fight();
         this.ennemis = [];
+        this.menu = new Menu();
         this.initializeEnemies();
     }
 
@@ -40,8 +43,8 @@ class GameManager {
     startGame() {
         const selectedCharacters: Character[] = this.selectCharacters();
         const selectedEnemies = this.selectRandomEnemies();
-
-        this.fight.startCombat(selectedCharacters, selectedEnemies).then(() => {
+    
+        this.fight.startCombat(selectedCharacters, selectedEnemies, this.menu).then(() => {
             console.log('Combat terminé.');
         }).catch(error => {
             console.error('Une erreur est survenue pendant le combat :', error);
@@ -52,7 +55,7 @@ class GameManager {
         const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
         const selectedCharacters: Character[] = [];
 
-        console.log("Sélectionnez 3 personnages pour votre équipe :");
+        console.log("\x1b[34mSélectionnez 3 personnages pour votre équipe :\x1b[0m");
         characters.forEach((character, index) => {
             console.log(`${index + 1}. ${character.name}`);
         });
@@ -60,10 +63,10 @@ class GameManager {
         for (let i = 0; i < 3; i++) {
             let index;
             do {
-                index = Number(prompt('Entrez l\'indice du personnage que vous souhaitez sélectionner : '));
+                index = Number(prompt('\n\x1b[34mEntrez l\'indice du personnage que vous souhaitez sélectionner : \x1b[0m'));
             } while (index < 1 || index > 6); 
             selectedCharacters.push(characters[index - 1]);
-            console.log(`${characters[index - 1].name} a été sélectionné.`);
+            console.log(`\n\x1b[33m${characters[index - 1].name} a été sélectionné.\x1b[0m`);
         }
 
         return selectedCharacters;

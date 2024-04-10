@@ -10,8 +10,13 @@ enum Action {
 }
 
 class Fight {
-    async startCombat(players: Character[], enemies: Character[]) {
-        console.log('Le combat commence !');
+private menu: Menu;
+
+    constructor(menu: Menu) {
+        this.menu = menu;
+    }
+    async startCombat(players: Character[], enemies: Character[], menu: Menu) {
+        console.log('\nLe combat commence !');
 
         let currentPlayerIndex = 0;
         let currentEnemyIndex = 0;
@@ -23,7 +28,7 @@ class Fight {
             const action = await this.chooseAction(currentPlayer);
             switch (action) {
                 case Action.Attack:
-                    const enemyTarget = await this.chooseTarget(enemies);
+                    const enemyTarget = await menu.chooseTarget(enemies);
                     this.attack(currentPlayer, enemyTarget);
                     if (enemyTarget.pvcurrent <= 0) {
                         console.log(`${enemyTarget.name} a été vaincu !`);
@@ -39,10 +44,10 @@ class Fight {
                     break;
             }
 
-            const playerTarget = this.chooseTarget(players);
+            const playerTarget = menu.chooseTarget(players);
             this.attack(currentEnemy, playerTarget);
             if (playerTarget.pvcurrent <= 0) {
-                console.log(`${playerTarget.name} a été vaincu !`);
+                console.log(`\x1b[31m${playerTarget.name} a été vaincu !\x1b[0m`);
                 players.splice(players.indexOf(playerTarget), 1);
             }
             if (players.length === 0) {
@@ -55,12 +60,12 @@ class Fight {
         }
     }
 
-    private async chooseAction(player: Character): Promise<Action> {
+    private chooseAction(player: Character): Action {
         let choice;
         do {
-            console.log(`${player.name}, que souhaitez-vous faire ? (1-Attaquer, 2-Pouvoir spécial, 3-Item) : `);
-            choice = Number(prompt());
+            choice = readlineSync.questionInt(`\n\x1b[34m${player.name}, que souhaitez-vous faire ? (1-Attaquer, 2-Pouvoir spécial, 3-Item) :\x1b[0m `);
         } while (choice !== 1 && choice !== 2 && choice !== 3);
+    
         switch (choice) {
             case 1:
                 return Action.Attack;
@@ -70,25 +75,6 @@ class Fight {
                 return Action.Item;
         }
     }
-    
-
-    private async chooseTarget(targets: Character[]): Promise<Character> {
-        console.log("Choisissez la cible :");
-        targets.forEach((target, index) => {
-            console.log(`${index + 1}. ${target.name}`);
-            console.log(`  - PV Current: ${target.pvcurrent}`);
-        });
-
-        let choice;
-        do {
-            const targetIndex = Number(prompt(`Choisissez une cible en entrant l'indice (1-${targets.length}): `)) - 1;
-            choice = targets[targetIndex];
-            if (!choice) {
-                console.log("Cible invalide. Veuillez choisir à nouveau.");
-            }
-        } while (!choice);
-        return choice;
-    }
 
     private attack(attacker: Character, target: Character) {
         if (!target) {
@@ -96,10 +82,10 @@ class Fight {
             return;
         }
     
-        console.log(`${attacker.name} attaque ${target.name} !`);
+        console.log(`\n\x1b[31m${attacker.name} attaque ${target.name} !\x1b[0m`);
         const damage = Math.max(attacker.attack - target.defense, 0);
         target.pvcurrent -= damage;
-        console.log(`${target.name} perd ${damage} points de vie.`);
+        console.log(`\x1b[31m${target.name} perd ${damage} points de vie.\x1b[0m`);
     }
 }
 
