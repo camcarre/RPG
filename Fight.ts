@@ -11,6 +11,8 @@ enum Action {
 
 class Fight {
 private menu: Menu;
+private clearScreen: string = "\x1b[2J\x1b[0;0H";
+
 
     constructor(menu: Menu) {
         this.menu = menu;
@@ -33,6 +35,7 @@ private menu: Menu;
                     if (enemyTarget.pvcurrent <= 0) {
                         console.log(`${enemyTarget.name} a été vaincu !`);
                         enemies.splice(enemies.indexOf(enemyTarget), 1);
+                        console.log(this.clearScreen);
                     }
                     if (enemies.length === 0) {
                         console.log('Les ennemis ont été vaincus. Vous avez gagné !');
@@ -42,6 +45,7 @@ private menu: Menu;
                 case Action.Defend:
                     currentPlayer.defend();
                     break;
+                    
             }
 
             const playerTarget = menu.chooseTarget(players);

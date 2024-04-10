@@ -16,6 +16,7 @@ import Menu from './Menu.ts';
 
 
 class GameManager {
+    private clearScreen: string = "\x1b[2J\x1b[0;0H";
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
     private menu: Menu;
@@ -46,20 +47,22 @@ class GameManager {
         this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
     }
 
-    private enterRoom = () => {
-        console.log("Vous entrez dans une salle.");
-        this.combatCount++;
-        if (this.combatCount === 1 || this.combatCount === 3) {
-            this.randomCombat().then(() => {
-                this.gameLoop();
-            });
-        } else if (this.combatCount === 2 || this.combatCount === 4) {
-            this.openChest();
+private enterRoom = () => {
+    console.log("Vous entrez dans une salle.");
+    this.combatCount++;
+    if (this.combatCount === 1 || this.combatCount === 3) {
+        this.randomCombat().then(() => {
             this.gameLoop();
-        } else if (this.combatCount === 5) {
-            this.fightBoss();
-        }
+        });
+    } else if (this.combatCount === 2 || this.combatCount === 4) {
+        this.openChest();
+        this.gameLoop();
+    } else if (this.combatCount === 5) {
+        this.fightBoss();
     }
+    console.log(this.clearScreen);
+    
+}
 
     private gameLoop = () => {
         this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
@@ -80,6 +83,7 @@ class GameManager {
                 .then(() => {
                     console.log('Combat terminé.');
                     resolve();
+                    console.log(this.clearScreen);
                 })
                 .catch(error => {
                     console.error('Une erreur est survenue pendant le combat :', error);
@@ -91,8 +95,10 @@ class GameManager {
     private fightBoss(): Boss[] {
         const selectedEnemies: Boss[] = [];
         const availableEnemies = Array(3).fill(new Boss());
-        
+        console.log(this.clearScreen);
+    
     return selectedEnemies;
+    
 }
 
     private quit = () => {
@@ -146,14 +152,13 @@ class GameManager {
 
         return selectedEnemies;
     }
+    
 }
 
 const gameManager = new GameManager();
 gameManager.startGame();
 
 export default gameManager;
-
-
 
 
 
