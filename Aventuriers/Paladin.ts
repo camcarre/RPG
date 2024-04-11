@@ -4,7 +4,7 @@ class Paladin extends Character {
     saintAttack: number;
 
     constructor(saintAttack : number) {
-        super("Paladin", 60, 90, 5, 80, 80,false);
+        super("Paladin", 60, 20, 5, 80, 80,false);
         this.saintAttack = saintAttack;
     }
 
