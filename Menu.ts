@@ -12,17 +12,18 @@ export default class Menu {
         console.log("\n\x1b[34mChoose the target:\x1b[0m");
         targets.forEach((target, index) => {
             console.log(`${index + 1}. ${target.name}`);
-            console.log(`  - PV Current: \x1b[32m${target.pvcurrent}\x1b[0m`);
+            console.log(`  - Current HP: \x1b[32m${target.pvcurrent}\x1b[0m`);
         });
 
         let choice;
         do {
-            const targetIndex = readlineSync.questionInt(`\n\x1b[34mChoisissez une cible en entrant l'indice (1-${targets.length}): \x1b[0m`) - 1;
+            const targetIndex = readlineSync.questionInt(`\n\x1b[34mChoose a target by entering the index (1-${targets.length}): \x1b[0m`) - 1;
             choice = targets[targetIndex];
             if (!choice) {
-                console.log("Cible invalide. Veuillez choisir à nouveau.");
+                console.log("Invalid target. Please choose again.");
             }
         } while (!choice);
+        console.log('\x1Bc');
         return choice;
     }
 
@@ -47,20 +48,9 @@ export default class Menu {
 
         let choice;
         do {
-            choice = Number(prompt('\x1b[34mChoisissez une action en entrant le numéro correspondant :\x1b[0m'));
+            choice = Number(prompt('\x1b[34mChoose an action by entering the corresponding number:\x1b[0m'));
         } while (choice < 1 || choice > 4);
 
         return choice;
     }
 }
-
-
-
-
-
-
-
-
-
-
-

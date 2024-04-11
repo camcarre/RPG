@@ -2,7 +2,7 @@ import Character from '../Character.ts';
 
 class Voleur extends Character {
     constructor() {
-        super("voleur", 50, 30, 10, 80, 80,false);
+        super("🗝 Voleur", 60, 50, 6, 130, 130, false);
     }
 
     private volerObjet(): string {

@@ -5,7 +5,7 @@ import Character from '../Character.ts';
     maxMana: 90;
 
     constructor() {
-        super("Mage", 30, 30, 5, 90, 90,false);
+        super("🔮 Mage", 40, 30, 6, 120, 120, false);
         this.mana = this.mana; 
         this.maxMana = this.maxMana; 
     }

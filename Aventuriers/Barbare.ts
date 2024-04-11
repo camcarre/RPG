@@ -2,7 +2,7 @@ import Character from '../Character.ts';
 
 export default class Barbare extends Character {
     constructor() {
-        super("Barbare", 100, 20, 5, 80, 80, false);
+        super("💥 Barbare", 85, 40, 5, 150, 150, false);
     }
 
     private attaqueBerserk(adversaires: Character[]): void {

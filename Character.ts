@@ -53,10 +53,14 @@ class Character {
             this.pvcurrent = this.pvmax;
         }
         console.log(`${this.name} has been healed by ${amount} HP. Current health is ${this.pvcurrent}.`);
-    }
 
+    }
     public isDead(): boolean {
-        return this.pvcurrent <= 0;
+        if (this.pvcurrent <= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public revive(amount: number): void {

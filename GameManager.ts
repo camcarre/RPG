@@ -74,9 +74,26 @@ class GameManager {
     }
 
     private gameLoop = () => {
-        this.makeChoice("\nDo you want to enter a room or quit the game?", this.enterRoom, this.quit);
+        this.checkGameOver()
+            .then(() => {
+                this.makeChoice("\nDo you want to enter a room or quit the game?", this.enterRoom, this.quit);
+            })
+            .catch(error => {
+                console.error(error.message);
+                process.exit(1); 
+            });
     }
 
+private checkGameOver = (): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        if (this.selectedCharacters.every(character => character.isDead())) {
+            console.log('All characters are dead. Game over.');
+            resolve(true); 
+        } else {
+            resolve(false);
+        }
+    });
+}
     private randomCombat = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             const selectedEnemies = this.selectRandomEnemies();
@@ -84,8 +101,16 @@ class GameManager {
             this.fight.startCombat(this.selectedCharacters, selectedEnemies, this.menu)
                 .then(() => {
                     console.log('\nCombat finished.\x1b[0m');
-                    resolve();
-                    console.log(this.clearScreen);
+                    return this.checkGameOver();
+                })
+                .then(gameOver => {
+                    if (gameOver) {
+                        console.log('Game Over');
+
+                    } else {
+                        resolve();
+                        console.log(this.clearScreen);
+                    }
                 })
                 .catch(error => {
                     console.error('An error occurred during combat:', error);
@@ -99,6 +124,9 @@ class GameManager {
             const boss = new Boss();
 
             this.fight.startCombat(this.selectedCharacters, [boss], this.menu)
+                .then(() => {
+                    return this.checkGameOver();
+                })
                 .then(() => {
                     this.printWin();
                     resolve();
@@ -164,17 +192,17 @@ class GameManager {
         |                                                |
         +------------------------------------------------+
         `);
-        console.log("\x1b[34mWelcome to the game!\x1b[0m");
-    console.log(`Welcome to "Dungeon Explorers"! Choose a group of adventurers from 6 classes. Explore 5 rooms: battles, chests, and Boss. Use items to survive.
-    Face enemies and a formidable Boss. Win by defeating the Boss or lose if all your adventurers are defeated. Ready for the adventure?`);
-
+console.log("\x1b[34mWelcome to the game!\x1b[0m");
+console.log(`tWelcome to "Dungeon Explorers"! `);
+console.log(`Choose a group of adventurers from 6 classes. Explore 5 rooms: battles, chests, and Boss. Use items to survive.
+Face enemies and a formidable Boss. Win by defeating the Boss or lose if all your adventurers are defeated.`);
+console.log(`Ready for the adventure?`);
 
 
     console.log("\x1b[34mSelect 3 characters for your team:\x1b[0m");
     characters.forEach((character, index) => {
         console.log('\x1b[31m%s\x1b[0m', `${index + 1}. ${character.name}`);
-        console.log('\x1b[32m%s\x1b[0m', `Attack: ${character.attack}, Defense: ${character.defense}, Speed: ${character.speed}, Max HP: ${character.pvmax}, Current HP: ${character.pvcurrent}`);
-    });
+        console.log('\x1b[32m%s\x1b[0m', `⚔️ Attack: ${character.attack}, 🛡️ Defense: ${character.defense}, 🏃 Speed: ${character.speed}, ❤️ Max HP: ${character.pvmax}, 💔 Current HP: ${character.pvcurrent}`);    });
 
     for (let i = 0; i < 3; i++) {
         let index;
@@ -184,9 +212,7 @@ class GameManager {
         selectedCharacters.push(characters[index - 1]);
         console.log(`\n\x1b[33m${characters[index - 1].name} has been selected.\x1b[0m`);
     }
-
         return selectedCharacters;
-
     }
 
     private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
@@ -217,13 +243,16 @@ class GameManager {
             if (choice === '4') {
                 let itemIndex = Number(prompt('Enter the index of the item you want to use: '));
                 this.player.useItem(itemIndex);
+            } else if (choice === '3') {
+                this.viewInventory();
             }
-        } while (choice !== '1' && choice !== '2' && choice !== '3');
+        } while (choice !== '1' && choice !== '2');
         if (choice === '1') yesCallback();
         else if (choice === '2') noCallback();
-        else if (choice === '3') this.viewInventory();
     }
     }
+
+    
     
     const gameManager = new GameManager();
     gameManager.startGame();

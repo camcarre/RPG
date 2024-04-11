@@ -2,7 +2,7 @@ import Character from '../Character.ts';
 
 class Prêtre extends Character {
     constructor() {
-        super("Prêtre", 40, 20, 10, 80, 80,false);
+        super("🙏 Prêtre", 45, 25, 7, 100, 100, false);
     }
 
     private soigner(cible: Prêtre): void {
