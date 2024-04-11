@@ -2,10 +2,10 @@ import Character from '../Character.ts';
 
 export default class Barbare extends Character {
     constructor() {
-        super("Barbare", 100, 20, 5, 80, 80);
+        super("Barbare", 100, 20, 5, 80, 80, false);
     }
 
-    attaqueBerserk(adversaires: Character[]): void {
+    private attaqueBerserk(adversaires: Character[]): void {
         if (adversaires.length === 0) {
             console.log("Aucun ennemi à attaquer !");
             return;

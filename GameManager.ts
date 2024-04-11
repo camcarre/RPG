@@ -17,7 +17,7 @@
 
 
 class GameManager {
-    player: Character;
+    private player: Character;
     private clearScreen: string = "\x1b[2J\x1b[0;0H";
     private fight: Fight;
     private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
@@ -39,7 +39,7 @@ class GameManager {
 
     }
 
-    initializeEnemies() {
+    private initializeEnemies() {
         this.addEnnemi(new Squelette());
         this.addEnnemi(new Sorcier());
         this.addEnnemi(new Gobelin());
@@ -47,11 +47,11 @@ class GameManager {
         this.addEnnemi(new Geant());
     }
 
-    addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
+    private addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
         this.ennemis.push(ennemi);
     }
 
-    startGame() {
+    public startGame() {
         this.initializeInventory();
         this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
     }
@@ -123,36 +123,28 @@ class GameManager {
         this.inventory.push(item);
     }
 
+    private useItem(player: Character, itemIndex: number) {
+        console.log("Inventaire des items :");
+        this.viewInventory();
+        console.log("Quel item voulez-vous utiliser ?");
+        this.viewInventory(itemIndex);
+    }
     
-
-private useItem(player: Character, itemIndex: number) {
-    console.log("Inventaire des items :");
-    this.viewInventory();
-    console.log("Quel item voulez-vous utiliser ?");
-    this.viewInventory(itemIndex);
-}
-    
-    
-
-    addToInventory(item: string) {
+    private addToInventory(item: string) {
         this.inventory.push(item);
     }
     
-    getInventory() {
+    private getInventory() {
         return this.inventory;
     }
 
 
-    initializeInventory() {
+    private initializeInventory() {
         this.inventory.push('Potion 🧪');
         this.inventory.push('Potion 🧪');
         this.inventory.push('Ether 💊');
         this.inventory.push('Morceau d\'étoile ✨');
     }
-
-
-
-
 
     private printWin(): void {
         console.log(`
@@ -173,7 +165,6 @@ private useItem(player: Character, itemIndex: number) {
         console.log("\x1b[32mLe jeu est terminé.\x1b[0m");
         Deno.exit();
     }
-
 
     private selectCharacters(): Character[] {
         const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
@@ -226,49 +217,47 @@ private useItem(player: Character, itemIndex: number) {
 
     return selectedCharacters;
 
+    }
+
+    private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
+        const selectedEnemies: (Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
+        const availableEnemies = this.ennemis.slice();
+
+        for (let i = 0; i < 3; i++) {
+            const randomIndex = Math.floor(Math.random() * availableEnemies.length);
+            const randomEnemy = availableEnemies.splice(randomIndex, 1)[0];
+            selectedEnemies.push(randomEnemy);
         }
 
-        private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
-            const selectedEnemies: (Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
-            const availableEnemies = this.ennemis.slice();
+        return selectedEnemies;
+    }
 
-            for (let i = 0; i < 3; i++) {
-                const randomIndex = Math.floor(Math.random() * availableEnemies.length);
-                const randomEnemy = availableEnemies.splice(randomIndex, 1)[0];
-                selectedEnemies.push(randomEnemy);
+    private viewInventory(itemIndex?: number) {
+        if (itemIndex !== undefined) {
+            console.log(`Item à l'index ${itemIndex} : ${this.inventory[itemIndex]}`);
+        } else {
+            console.log(this.inventory.join(' '));    }
+    }
+    
+    private makeChoice(question: string, yesCallback: () => void, noCallback: () => void) {
+        let choice;
+        do {
+            choice = prompt(`${question} (1 pour oui, 2 pour non, 3 pour voir l'inventaire, 4 pour utiliser un item)`);
+            if (choice === '4') {
+                let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
+                this.player.useItem(itemIndex);
             }
-
-            return selectedEnemies;
-        }
-
-viewInventory(itemIndex?: number) {
-    if (itemIndex !== undefined) {
-        console.log(`Item à l'index ${itemIndex} : ${this.inventory[itemIndex]}`);
-    } else {
-        console.log(this.inventory.join(' '));    }
-}
+        } while (choice !== '1' && choice !== '2' && choice !== '3');
+        if (choice === '1') yesCallback();
+        else if (choice === '2') noCallback();
+        else if (choice === '3') this.viewInventory();
+    }
+    }
     
-private makeChoice(question: string, yesCallback: () => void, noCallback: () => void) {
-    let choice;
-    do {
-        choice = prompt(`${question} (1 pour oui, 2 pour non, 3 pour voir l'inventaire, 4 pour utiliser un item)`);
-        if (choice === '4') {
-            let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
-            this.player.useItem(itemIndex);
-        }
-    } while (choice !== '1' && choice !== '2' && choice !== '3');
-    if (choice === '1') yesCallback();
-    else if (choice === '2') noCallback();
-    else if (choice === '3') this.viewInventory();
-}
-}
-    
+const gameManager = new GameManager();
+gameManager.startGame();
 
-
-    const gameManager = new GameManager();
-    gameManager.startGame();
-
-    export default gameManager;
+export default gameManager;
 
 
 

@@ -4,11 +4,11 @@ class Paladin extends Character {
     saintAttack: number;
 
     constructor(saintAttack : number) {
-        super("Paladin", 60, 90, 5, 80, 80);
+        super("Paladin", 60, 90, 5, 80, 80,false);
         this.saintAttack = saintAttack;
     }
 
-    attaqueSainte(adversaires: Paladin[]): void {
+    private attaqueSainte(adversaires: Paladin[]): void {
         console.log(`${this.name} lance une attaque sainte !`);
         adversaires.forEach(adversaire => {
             const degats = Math.max(0, (this.saintAttack - adversaire.defense) * 0.4);

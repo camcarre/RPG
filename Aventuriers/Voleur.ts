@@ -2,10 +2,10 @@ import Character from '../Character.ts';
 
 class Voleur extends Character {
     constructor() {
-        super("voleur", 50, 50, 10, 80, 80);
+        super("voleur", 50, 50, 10, 80, 80,false);
     }
 
-    volerObjet(): string {
+    private volerObjet(): string {
         const randomNumber = Math.random() * 100;
 
         if (randomNumber < 40) {

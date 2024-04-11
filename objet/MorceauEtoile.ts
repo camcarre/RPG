@@ -2,7 +2,7 @@ import Character from '../Character.ts';
 import Objet from '../Objet.ts';
 
 export default class MorceauEtoile extends Objet {
-    use(cible: Character): void {
+    public use(cible: Character): void {
         if (cible.isKO) {
             const pvRestores = Math.ceil(cible.pvmax * 0.2);
             cible.pvcurrent = pvRestores;
