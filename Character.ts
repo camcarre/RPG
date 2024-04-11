@@ -19,8 +19,10 @@ class Character {
         this.pvcurrent = pvcurrent;
         this.isKO = false;
         this.inventory = [];
-
     }
+
+    
+
 
     public takeDamage(attacker: Character) {
         const damage = Math.max(attacker.attack - this.defense, 0);
