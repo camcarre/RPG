@@ -1,5 +1,5 @@
-import Character from '../Character';
-import Objet from '../Objet';
+import Character from '../Character.ts';
+import Objet from '../Objet.ts';
 
 export default class Ether extends Objet {
     use(cible: Character): void {

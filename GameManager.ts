@@ -71,7 +71,6 @@ private enterRoom = () => {
 
     private openChest = () => {
         console.log("\n\x1b[33mVous trouvez un coffre !\x1b[0m");
-        //coffre
     }
 
     private randomCombat = (): Promise<void> => {
