@@ -124,3 +124,25 @@ import * as readlineSync from 'readline-sync';
         }
 
 export default Fight;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

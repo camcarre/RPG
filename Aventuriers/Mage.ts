@@ -5,13 +5,13 @@ import Character from '../Character.ts';
     maxMana: 90;
 
     constructor() {
-        super("Mage", 30, 30, 5, 90, 90);
+        super("Mage", 30, 30, 5, 90, 90,false);
         this.mana = this.mana; 
         this.maxMana = this.maxMana; 
     }
 
     
-    attaqueMagique(): void {
+    private attaqueMagique(): void {
         if (this.mana >= 20) {
             console.log(`${this.name} lance une attaque magique !`);
             console.log("L'attaque magique inflige des dégâts !");

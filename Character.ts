@@ -10,7 +10,7 @@ class Character {
     
     
 
-    constructor(name: string, attack: number, defense: number, speed: number, pvmax: number, pvcurrent: number) {
+    constructor(name: string, attack: number, defense: number, speed: number, pvmax: number, pvcurrent: number, isKO: boolean) {
         this.name = name;
         this.attack = attack;
         this.defense = defense;
@@ -24,18 +24,18 @@ class Character {
     
 
 
-    takeDamage(attacker: Character) {
+    public takeDamage(attacker: Character) {
         const damage = Math.max(attacker.attack - this.defense, 0);
         this.pvcurrent -= damage;
         console.log(`${this.name} perd ${damage} points de vie.`);
     }
 
-    attackCharacter(target: Character) {
+    public attackCharacter(target: Character) {
         console.log(`${this.name} attaque ${target.name} !`);
         target.takeDamage(this);
     }
 
-    defend() {
+    public defend() {
         const damageReduction = Math.floor(this.defense / 2);
         console.log(`${this.name} se défend et réduit les dégâts de ${damageReduction}.`);
         return damageReduction;
@@ -77,9 +77,7 @@ class Character {
     public addItem(item: Item): void {
         this.inventory.push(item);
         console.log(`${this.name} a ajouté ${item.name} à son inventaire.`);
-    }
-
-    
+    }    
 }
 
 export default Character;

@@ -16,19 +16,16 @@
 
 
 
-    class GameManager {
-        player: Character;
-        private clearScreen: string = "\x1b[2J\x1b[0;0H";
-        private fight: Fight;
-        private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
-        private menu: Menu;
-        private combatCount = 0;
-        private selectedCharacters: Character[];
-        private characters: Character[];
-        private inventory: string[];
-        private selectedCharacters: Character[] = [];
-
-        
+class GameManager {
+    private player: Character;
+    private clearScreen: string = "\x1b[2J\x1b[0;0H";
+    private fight: Fight;
+    private ennemis: (Boss | Gobelin | Sorcier | Squelette | Zombie | Geant)[];
+    private menu: Menu;
+    private combatCount = 0;
+    private selectedCharacters: Character[];
+    private characters: Character[];
+    private inventory: string[];
 
 
         constructor() {
@@ -42,22 +39,22 @@
 
         }
 
-        initializeEnemies() {
-            this.addEnnemi(new Squelette());
-            this.addEnnemi(new Sorcier());
-            this.addEnnemi(new Gobelin());
-            this.addEnnemi(new Zombie());
-            this.addEnnemi(new Geant());
-        }
+    private initializeEnemies() {
+        this.addEnnemi(new Squelette());
+        this.addEnnemi(new Sorcier());
+        this.addEnnemi(new Gobelin());
+        this.addEnnemi(new Zombie());
+        this.addEnnemi(new Geant());
+    }
 
-        addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
-            this.ennemis.push(ennemi);
-        }
+    private addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
+        this.ennemis.push(ennemi);
+    }
 
-        startGame() {
-            this.initializeInventory();
-            this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
-        }
+    public startGame() {
+        this.initializeInventory();
+        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+    }
 
         private enterRoom = () => {
             console.log("Vous entrez dans une salle.");
@@ -80,26 +77,26 @@
             console.log(this.clearScreen);
         }
 
-        private gameLoop = () => {
-            this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
-        }
+    private gameLoop = () => {
+        this.makeChoice("\n\x1b[34mVoulez-vous entrer dans une salle ? ou arrêter le jeu ?\x1b[0m", this.enterRoom, this.quit);
+    }
 
         private randomCombat = (): Promise<void> => {
             return new Promise((resolve, reject) => {
                 const selectedEnemies = this.selectRandomEnemies();
 
-                this.fight.startCombat(this.selectedCharacters, selectedEnemies, this.menu)
-                    .then(() => {
-                        console.log('Combat terminé.');
-                        resolve();
-                        console.log(this.clearScreen);
-                    })
-                    .catch(error => {
-                        console.error('Une erreur est survenue pendant le combat :', error);
-                        reject(error);
-                    });
-            });
-        }
+            this.fight.startCombat(this.selectedCharacters, selectedEnemies, this.menu)
+                .then(() => {
+                    console.log('\n\x1b[32mCombat terminé.\x1b[0m');
+                    resolve();
+                    console.log(this.clearScreen);
+                })
+                .catch(error => {
+                    console.error('Une erreur est survenue pendant le combat :', error);
+                    reject(error);
+                });
+        });
+    }
 
         private fightBoss = (): Promise<void> => {
             return new Promise((resolve, reject) => {
@@ -131,7 +128,6 @@
 
         this.displayCurrentHealth();
     }
-        
 
     private useItem(player: Character, itemIndex: number) {
         console.log("Inventaire des items :");
@@ -139,25 +135,22 @@
         console.log("Quel item voulez-vous utiliser ?");
         this.viewInventory(itemIndex);
     }
-        
-        
-
-        addToInventory(item: string) {
-            this.inventory.push(item);
-        }
-        
-        getInventory() {
-            return this.inventory;
-        }
+    
+    private addToInventory(item: string) {
+        this.inventory.push(item);
+    }
+    
+    private getInventory() {
+        return this.inventory;
+    }
 
 
-        initializeInventory() {
-            this.inventory.push('Potion 🧪');
-            this.inventory.push('Potion 🧪');
-            this.inventory.push('Ether 💊');
-            this.inventory.push('Morceau d\'étoile ✨');
-        }
-
+    private initializeInventory() {
+        this.inventory.push('Potion 🧪');
+        this.inventory.push('Potion 🧪');
+        this.inventory.push('Ether 💊');
+        this.inventory.push('Morceau d\'étoile ✨');
+    }
 
         private printWin(): void {
             console.log(`
@@ -173,12 +166,11 @@
             `);
         }
 
-        private quit = () => {
-            console.log("Vous avez choisi d'arrêter le jeu");
-            console.log("Le jeu est terminé.");
-            Deno.exit();
-        }
-
+    private quit = () => {
+        console.log("\n\x1b[32mVous avez choisi d'arrêter le jeu\x1b[0m");
+        console.log("\x1b[32mLe jeu est terminé.\x1b[0m");
+        Deno.exit();
+    }
 
         private selectCharacters(): Character[] {
             const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
@@ -231,47 +223,47 @@
 
         return selectedCharacters;
 
-            }
+    }
 
-            private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
-                const selectedEnemies: (Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
-                const availableEnemies = this.ennemis.slice();
+    private selectRandomEnemies(): (Gobelin | Sorcier | Squelette | Zombie | Geant)[] {
+        const selectedEnemies: (Gobelin | Sorcier | Squelette | Zombie | Geant)[] = [];
+        const availableEnemies = this.ennemis.slice();
 
-                for (let i = 0; i < 3; i++) {
-                    const randomIndex = Math.floor(Math.random() * availableEnemies.length);
-                    const randomEnemy = availableEnemies.splice(randomIndex, 1)[0];
-                    selectedEnemies.push(randomEnemy);
-                }
-
-                return selectedEnemies;
-            }
-
-        viewInventory(itemIndex?: number) {
-            if (itemIndex !== undefined) {
-                console.log(`Item à l'index ${itemIndex} : ${this.inventory[itemIndex]}`);
-            } else {
-                console.log(this.inventory.join(' '));    }
+        for (let i = 0; i < 3; i++) {
+            const randomIndex = Math.floor(Math.random() * availableEnemies.length);
+            const randomEnemy = availableEnemies.splice(randomIndex, 1)[0];
+            selectedEnemies.push(randomEnemy);
         }
-        
-        private makeChoice(question: string, yesCallback: () => void, noCallback: () => void) {
-            let choice;
-            do {
-                choice = prompt(`${question} (1 pour oui, 2 pour non,)`);
-            } while (choice !== '1' && choice !== '2');
-            if (choice === '1') yesCallback();
+
+        return selectedEnemies;
+    }
+
+    private viewInventory(itemIndex?: number) {
+        if (itemIndex !== undefined) {
+            console.log(`Item à l'index ${itemIndex} : ${this.inventory[itemIndex]}`);
+        } else {
+            console.log(this.inventory.join(' '));    }
+    }
+    
+    private makeChoice(question: string, yesCallback: () => void, noCallback: () => void) {
+        let choice;
+        do {
+            choice = prompt(`${question} (1 pour oui, 2 pour non, 3 pour voir l'inventaire, 4 pour utiliser un item)`);
+            if (choice === '4') {
+                let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
+                this.player.useItem(itemIndex);
             }
+        } while (choice !== '1' && choice !== '2' && choice !== '3');
+        if (choice === '1') yesCallback();
+        else if (choice === '2') noCallback();
+        else if (choice === '3') this.viewInventory();
+    }
+    }
+    
+const gameManager = new GameManager();
+gameManager.startGame();
 
-        private displayCurrentHealth(): void {
-        const selectedCharacters = this.selectCharacters();
-        selectedCharacters.forEach((character, index) => {
-            console.log(`Personnage ${index + 1} (${character.name}) pv actuel : ${character.pvcurrent}`);
-            });
-        }
-        }
-        const gameManager = new GameManager();
-        gameManager.startGame();
-
-        export default gameManager;
+export default gameManager;
 
 
 
