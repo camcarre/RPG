@@ -19,8 +19,10 @@ class Character {
         this.pvcurrent = pvcurrent;
         this.isKO = false;
         this.inventory = [];
-
     }
+
+    
+
 
     takeDamage(attacker: Character) {
         const damage = Math.max(attacker.attack - this.defense, 0);
@@ -76,8 +78,6 @@ class Character {
         this.inventory.push(item);
         console.log(`${this.name} a ajouté ${item.name} à son inventaire.`);
     }
-
-
 
     
 }
