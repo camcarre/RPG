@@ -11,7 +11,8 @@ enum Action {
 
 class Fight {
 private menu: Menu;
-private clearScreen: string = "\x1b[2J\x1b[0;0H";
+private clearScreen: string = "\x1b[2J\x1b[0;0H";j
+
 
 
     constructor(menu: Menu) {
@@ -64,22 +65,19 @@ private clearScreen: string = "\x1b[2J\x1b[0;0H";
         }
     }
 
-    private chooseAction(player: Character): Action {
-        let choice;
-        do {
-            choice = readlineSync.questionInt(`\n\x1b[34m${player.name}, que souhaitez-vous faire ? (1-Attaquer, 2-Pouvoir spécial, 3-Item) :\x1b[0m `);
-        } while (choice !== 1 && choice !== 2 && choice !== 3);
+
+
+
+    chooseAction(player: Character) {
+        let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
+        player.useItem(itemIndex);
     
-        switch (choice) {
-            case 1:
-                return Action.Attack;
-            case 2:
-                return Action.SpecialPower;
-            case 3:
-                return Action.Item;
-        }
+
     }
 
+
+
+    
     private attack(attacker: Character, target: Character) {
         if (!target) {
             console.log("La cible de l'attaque est invalide.");
