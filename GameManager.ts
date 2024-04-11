@@ -1,20 +1,18 @@
-        import Barbare from './Aventuriers/Barbare.ts';
-        import Mage from './Aventuriers/Mage.ts';
-        import Paladin from './Aventuriers/Paladin.ts';
-        import Guerrier from './Aventuriers/Guerrier.ts';
-        import Voleur from './Aventuriers/Voleur.ts';
-        import Prêtre from './Aventuriers/Prêtre.ts';
-        import Boss from './Méchants/Boss.ts';
-        import Geant from './Méchants/Geant.ts';
-        import Gobelin from './Méchants/Gobelin.ts';
-        import Sorcier from './Méchants/Sorcier.ts';
-        import Squelette from './Méchants/Squelette.ts';
-        import Zombie from './Méchants/Zombie.ts';
-        import Fight from './Fight.ts';
-        import Character from './Character.ts';
-        import Menu from './Menu.ts';
-
-
+import Barbare from './Aventuriers/Barbare.ts';
+import Mage from './Aventuriers/Mage.ts';
+import Paladin from './Aventuriers/Paladin.ts';
+import Guerrier from './Aventuriers/Guerrier.ts';
+import Voleur from './Aventuriers/Voleur.ts';
+import Prêtre from './Aventuriers/Prêtre.ts';
+import Boss from './Méchants/Boss.ts';
+import Geant from './Méchants/Geant.ts';
+import Gobelin from './Méchants/Gobelin.ts';
+import Sorcier from './Méchants/Sorcier.ts';
+import Squelette from './Méchants/Squelette.ts';
+import Zombie from './Méchants/Zombie.ts';
+import Fight from './Fight.ts';
+import Character from './Character.ts';
+import Menu from './Menu.ts';
 
 class GameManager {
     private player: Character;
@@ -27,17 +25,15 @@ class GameManager {
     private characters: Character[];
     private inventory: string[];
 
-
-        constructor() {
-            this.fight = new Fight();
-            this.ennemis = [];
-            this.menu = new Menu();
-            this.initializeEnemies();
-            this.selectedCharacters = this.selectCharacters();
-            this.characters = this.selectedCharacters;
-            this.inventory = [];
-
-        }
+    constructor() {
+        this.fight = new Fight();
+        this.ennemis = [];
+        this.menu = new Menu();
+        this.initializeEnemies();
+        this.selectedCharacters = this.selectCharacters();
+        this.characters = this.selectedCharacters;
+        this.inventory = [];
+    }
 
     private initializeEnemies() {
         this.addEnnemi(new Squelette());
@@ -47,100 +43,97 @@ class GameManager {
         this.addEnnemi(new Geant());
     }
 
-    private addEnnemi(ennemi:Gobelin | Sorcier | Squelette | Zombie | Geant) {
+    private addEnnemi(ennemi: Gobelin | Sorcier | Squelette | Zombie | Geant) {
         this.ennemis.push(ennemi);
     }
 
     public startGame() {
         this.initializeInventory();
-        this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
+        this.makeChoice("Do you want to enter a room or quit the game?", this.enterRoom, this.quit);
     }
 
-private enterRoom = () => {
-    console.log("Vous entrez dans une salle.");
-    this.combatCount++;
-    if (this.combatCount === 1 || this.combatCount === 3) {
-        this.randomCombat().then(() => {
-            this.gameLoop();
-        });
-    } else if (this.combatCount === 2 || this.combatCount === 4) {
-        const openChest = confirm("Vous trouvez un coffre. Voulez-vous l'ouvrir ?");
-        if (openChest) {
-            this.gameLoop();
-        } else {
-            console.log("Vous passez à la salle suivante.");
-            this.gameLoop();
+    private enterRoom = () => {
+        console.log("You enter a room.");
+        this.combatCount++;
+        if (this.combatCount === 1 || this.combatCount === 3) {
+            this.randomCombat().then(() => {
+                this.gameLoop();
+            });
+        } else if (this.combatCount === 2 || this.combatCount === 4) {
+            const openChest = confirm("You found a chest. Do you want to open it?");
+            if (openChest) {
+                this.gameLoop();
+            } else {
+                console.log("You move on to the next room.");
+                this.gameLoop();
+            }
+        } else if (this.combatCount === 5) {
+            this.fightBoss();
         }
-    } else if (this.combatCount === 5) {
-        this.fightBoss();
+        console.log(this.clearScreen);
     }
-    console.log(this.clearScreen);
-}
 
     private gameLoop = () => {
-        this.makeChoice("\n\x1b[34mVoulez-vous entrer dans une salle ? ou arrêter le jeu ?\x1b[0m", this.enterRoom, this.quit);
+        this.makeChoice("\nDo you want to enter a room or quit the game?", this.enterRoom, this.quit);
     }
 
-        private randomCombat = (): Promise<void> => {
-            return new Promise((resolve, reject) => {
-                const selectedEnemies = this.selectRandomEnemies();
+    private randomCombat = (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            const selectedEnemies = this.selectRandomEnemies();
 
             this.fight.startCombat(this.selectedCharacters, selectedEnemies, this.menu)
                 .then(() => {
-                    console.log('\n\x1b[32mCombat terminé.\x1b[0m');
+                    console.log('\nCombat finished.\x1b[0m');
                     resolve();
                     console.log(this.clearScreen);
                 })
                 .catch(error => {
-                    console.error('Une erreur est survenue pendant le combat :', error);
+                    console.error('An error occurred during combat:', error);
                     reject(error);
                 });
         });
     }
 
-        private fightBoss = (): Promise<void> => {
-            return new Promise((resolve, reject) => {
-                const boss = new Boss(); 
+    private fightBoss = (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            const boss = new Boss();
 
-                this.fight.startCombat(this.selectedCharacters, [boss], this.menu)
-                    .then(() => {
-                        this.printWin();
-                        resolve();
-                    })
-                    .catch(error => {
-                        console.error('Une erreur est survenue pendant le combat :', error);
-                        reject(error);
-                    });
-            });
-        }
-
-
-
+            this.fight.startCombat(this.selectedCharacters, [boss], this.menu)
+                .then(() => {
+                    this.printWin();
+                    resolve();
+                })
+                .catch(error => {
+                    console.error('An error occurred during combat:', error);
+                    reject(error);
+                });
+        });
+    }
 
     private initializeInventory() {
         this.inventory.push('Potion 🧪');
         this.inventory.push('Potion 🧪');
         this.inventory.push('Ether 💊');
-        this.inventory.push('Morceau d\'étoile ✨');
+        this.inventory.push('Star piece ✨');
     }
 
-        private printWin(): void {
-            console.log(`
-            +------------------+
-            |                  |
-            |          _       |
-            |__      _(_)_ __  |
-            |\ \ /\ / / | '_ \ |
-            | \ V  V /| | | | ||
-            |  \_/\_/ |_|_| |_||
-            |                  |
-            +------------------+
-            `);
-        }
+    private printWin(): void {
+        console.log(`
+        +------------------+
+        |                  |
+        |          _       |
+        |__      _(_)_ __  |
+        |\ \\ /\\ / / | '_ \\ |
+        | \\ V  V /| | | | ||
+        |  \\_/\\_/ |_|_| |_||
+        |                  |
+        +------------------+
+        `);
+    }
 
     private quit = () => {
-        console.log("\n\x1b[32mVous avez choisi d'arrêter le jeu\x1b[0m");
-        console.log("\x1b[32mLe jeu est terminé.\x1b[0m");
+        console.log("\nYou chose to quit the game.");
+        console.log("The game is over.");
         Deno.exit();
     }
 
@@ -171,27 +164,26 @@ private enterRoom = () => {
         |                                                |
         +------------------------------------------------+
         `);
-        console.log("\x1b[34mBienvenue dans le jeu !\x1b[0m");
-        console.log(`Bienvenue dans "Explorateurs du Donjon" ! Choisissez un groupe d'aventuriers parmi 6 classes. Parcourez 5 salles : combats, coffres et Boss. Utilisez des objets pour survivre.
-        Affrontez des ennemis et un Boss redoutable. Gagnez en terrassant le Boss ou perdez si tous vos aventuriers sont vaincus. Prêt pour l'aventure ?`);
+        console.log("\x1b[34mWelcome to the game!\x1b[0m");
+    console.log(`Welcome to "Dungeon Explorers"! Choose a group of adventurers from 6 classes. Explore 5 rooms: battles, chests, and Boss. Use items to survive.
+    Face enemies and a formidable Boss. Win by defeating the Boss or lose if all your adventurers are defeated. Ready for the adventure?`);
 
 
 
+    console.log("\x1b[34mSelect 3 characters for your team:\x1b[0m");
+    characters.forEach((character, index) => {
+        console.log('\x1b[31m%s\x1b[0m', `${index + 1}. ${character.name}`);
+        console.log('\x1b[32m%s\x1b[0m', `Attack: ${character.attack}, Defense: ${character.defense}, Speed: ${character.speed}, Max HP: ${character.pvmax}, Current HP: ${character.pvcurrent}`);
+    });
 
-        console.log("\x1b[34mSélectionnez 3 personnages pour votre équipe :\x1b[0m");
-        characters.forEach((character, index) => {
-            console.log('\x1b[31m%s\x1b[0m', `${index + 1}. ${character.name}`);
-            console.log('\x1b[32m%s\x1b[0m', `Attaque : ${character.attack}, Défense : ${character.defense}, Vitesse : ${character.speed}, PV Max : ${character.pvmax}, PV Actuels : ${character.pvcurrent}`);
-        });
-
-        for (let i = 0; i < 3; i++) {
-            let index;
-            do {
-                index = Number(prompt('\n\x1b[34mEntrez l\'indice du personnage que vous souhaitez sélectionner : \x1b[0m'));
-            } while (index < 1 || index > 6); 
-            selectedCharacters.push(characters[index - 1]);
-            console.log(`\n\x1b[33m${characters[index - 1].name} a été sélectionné.\x1b[0m`);
-        }
+    for (let i = 0; i < 3; i++) {
+        let index;
+        do {
+            index = Number(prompt('\n\x1b[34mEnter the index of the character you want to select:\x1b[0m'));
+        } while (index < 1 || index > 6);
+        selectedCharacters.push(characters[index - 1]);
+        console.log(`\n\x1b[33m${characters[index - 1].name} has been selected.\x1b[0m`);
+    }
 
         return selectedCharacters;
 
@@ -212,17 +204,18 @@ private enterRoom = () => {
 
     private viewInventory(itemIndex?: number) {
         if (itemIndex !== undefined) {
-            console.log(`Item à l'index ${itemIndex} : ${this.inventory[itemIndex]}`);
+            console.log(`Item at index ${itemIndex}: ${this.inventory[itemIndex]}`);
         } else {
-            console.log(this.inventory.join(' '));    }
+            console.log(this.inventory.join(' '));
+        }
     }
     
     private makeChoice(question: string, yesCallback: () => void, noCallback: () => void) {
         let choice;
         do {
-            choice = prompt(`${question} (1 pour oui, 2 pour non, 3 pour voir l'inventaire, 4 pour utiliser un item)`);
+            choice = prompt(`${question} (1 for yes, 2 for no, 3 to view inventory, 4 to use an item)`);
             if (choice === '4') {
-                let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
+                let itemIndex = Number(prompt('Enter the index of the item you want to use: '));
                 this.player.useItem(itemIndex);
             }
         } while (choice !== '1' && choice !== '2' && choice !== '3');
@@ -232,10 +225,11 @@ private enterRoom = () => {
     }
     }
     
-const gameManager = new GameManager();
-gameManager.startGame();
-
-export default gameManager;
+    const gameManager = new GameManager();
+    gameManager.startGame();
+    
+    export default gameManager;
+    
 
 
 
