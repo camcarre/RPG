@@ -65,17 +65,24 @@ private clearScreen: string = "\x1b[2J\x1b[0;0H";j
         }
     }
 
-
-
-
-    chooseAction(player: Character) {
-        let itemIndex = Number(prompt('Entrez l\'indice de l\'item que vous souhaitez utiliser : '));
-        player.useItem(itemIndex);
     
 
+    private chooseAction(player: Character): Action {
+        let choice;
+        do {
+            choice = readlineSync.questionInt(`\n\x1b[34m${player.name}, que souhaitez-vous faire ? (1-Attaquer, 2-Pouvoir spécial, 3-Item) :\x1b[0m `);
+        } while (choice !== 1 && choice !== 2 && choice !== 3);
+
+        switch (choice) {
+            case 1:
+                return Action.Attack;
+            case 2:
+                return Action.SpecialPower;
+            case 3:
+                this.GameMange.useItem(player);
+                return Action.Item;
+        }
     }
-
-
 
     
     private attack(attacker: Character, target: Character) {
