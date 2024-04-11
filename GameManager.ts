@@ -56,26 +56,26 @@ class GameManager {
         this.makeChoice("Voulez-vous entrer dans une salle ? ou arrêter le jeu ?", this.enterRoom, this.quit);
     }
 
-        private enterRoom = () => {
-            console.log("Vous entrez dans une salle.");
-            this.combatCount++;
-            if (this.combatCount === 1 || this.combatCount === 3) {
-                this.randomCombat().then(() => {
-                    this.gameLoop();
-                });
-            } else if (this.combatCount === 2 || this.combatCount === 4) {
-                const openChest = confirm("Vous trouvez un coffre. Voulez-vous l'ouvrir ?");
-                if (openChest) {
-                    this.openChest();
-                } else {
-                    console.log("Vous passez à la salle suivante.");
-                }
-                this.gameLoop();
-            } else if (this.combatCount === 5) {
-                this.fightBoss();
-            }
-            console.log(this.clearScreen);
+private enterRoom = () => {
+    console.log("Vous entrez dans une salle.");
+    this.combatCount++;
+    if (this.combatCount === 1 || this.combatCount === 3) {
+        this.randomCombat().then(() => {
+            this.gameLoop();
+        });
+    } else if (this.combatCount === 2 || this.combatCount === 4) {
+        const openChest = confirm("Vous trouvez un coffre. Voulez-vous l'ouvrir ?");
+        if (openChest) {
+            this.gameLoop();
+        } else {
+            console.log("Vous passez à la salle suivante.");
+            this.gameLoop();
         }
+    } else if (this.combatCount === 5) {
+        this.fightBoss();
+    }
+    console.log(this.clearScreen);
+}
 
     private gameLoop = () => {
         this.makeChoice("\n\x1b[34mVoulez-vous entrer dans une salle ? ou arrêter le jeu ?\x1b[0m", this.enterRoom, this.quit);
@@ -115,34 +115,6 @@ class GameManager {
         }
 
 
-    private openChest = () => {
-        console.log("Vous trouvez un coffre !");
-        const items = ['demiEtoile', 'Ether', 'MorceauEtoile', 'potion'];
-        const item = items[Math.floor(Math.random() * items.length)];
-        console.log(`Vous avez trouvé un ${item} dans le coffre !`);
-        this.inventory.push(item);
-
-        this.selectCharacters().forEach(character => {
-            character.pvcurrent -= character.pvcurrent * 0.1;
-        });
-
-        this.displayCurrentHealth();
-    }
-
-    private useItem(player: Character, itemIndex: number) {
-        console.log("Inventaire des items :");
-        this.viewInventory();
-        console.log("Quel item voulez-vous utiliser ?");
-        this.viewInventory(itemIndex);
-    }
-    
-    private addToInventory(item: string) {
-        this.inventory.push(item);
-    }
-    
-    private getInventory() {
-        return this.inventory;
-    }
 
 
     private initializeInventory() {

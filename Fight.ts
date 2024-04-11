@@ -26,10 +26,11 @@ import * as readlineSync from 'readline-sync';
                 let currentEnemyIndex = 0;
 
                 while (players.length > 0 && enemies.length > 0) {
-                    console.log('\nStatistiques des joueurs :');
+                    console.log('\x1b[32m%s\x1b[0m', '\nStatistiques des joueurs :'); // Vert
                     this.displayCharacterStats(players);
-                    console.log('\nStatistiques des ennemis :');
+                    console.log('\x1b[31m%s\x1b[0m', '\nStatistiques des ennemis :'); // Rouge
                     this.displayCharacterStats(enemies);
+
 
                     const currentPlayer = players[currentPlayerIndex];
                     const currentEnemy = enemies[currentEnemyIndex];
@@ -78,7 +79,8 @@ import * as readlineSync from 'readline-sync';
 
             private displayCharacterStats(characters: Character[]): void {
                 characters.forEach(character => {
-                    console.log(`Nom: ${character.name}, PV actuels: ${character.pvcurrent}, PV max: ${character.pvmax}`);
+                    const status = character.isKO ? 'Dead' : 'Alive';
+                    console.log(`Nom: ${character.name}, Attaque: ${character.attack}, Défense: ${character.defense}, Vitesse: ${character.speed}, PV actuels: ${character.pvcurrent}, PV max: ${character.pvmax}, Statut: ${status}`);
                 });
             }
 
