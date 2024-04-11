@@ -26,6 +26,17 @@ export default class Menu {
         return choice;
     }
 
+    monsterTurn(targets: Character[]): Character {
+        console.log("\n\x1b[34mLe monstre choisit une cible :\x1b[0m");
+    
+        const targetIndex = Math.floor(Math.random() * targets.length);
+    
+        const choice = targets[targetIndex];
+    
+        console.log(`Le monstre a choisi : ${choice.name}`);
+        return choice;
+    }
+
     async chooseItemAction(): Promise<Action> {
         console.log('\x1b[34mChoisissez l\'action à effectuer :\x1b[0m');
         console.log('1. Potion: Restitue 50% des PV d\'un personnage.');
