@@ -84,16 +84,17 @@ class GameManager {
             });
     }
 
-private checkGameOver = (): Promise<boolean> => {
-    return new Promise((resolve, reject) => {
-        if (this.selectedCharacters.every(character => character.isDead())) {
-            console.log('All characters are dead. Game over.');
-            resolve(true); 
-        } else {
-            resolve(false);
-        }
-    });
-}
+    private checkGameOver = (): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            if (this.selectedCharacters.every(character => character.isDead())) {
+                console.log('All characters are dead. Game over.');
+                resolve(true); 
+            } else {
+                resolve(false);
+            }
+        });
+    }
+
     private randomCombat = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             const selectedEnemies = this.selectRandomEnemies();
@@ -165,9 +166,9 @@ private checkGameOver = (): Promise<boolean> => {
         Deno.exit();
     }
 
-        private selectCharacters(): Character[] {
-            const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
-            const selectedCharacters: Character[] = [];
+    private selectCharacters(): Character[] {
+        const characters: Character[] = [new Barbare(), new Mage(), new Paladin(), new Guerrier(), new Voleur(), new Prêtre()];
+        const selectedCharacters: Character[] = [];
 
         console.log('\x1b[33m%s\x1b[0m', `
         +------------------------------------------------+
@@ -192,11 +193,12 @@ private checkGameOver = (): Promise<boolean> => {
         |                                                |
         +------------------------------------------------+
         `);
-console.log("\x1b[34mWelcome to the game!\x1b[0m");
-console.log(`tWelcome to "Dungeon Explorers"! `);
-console.log(`Choose a group of adventurers from 6 classes. Explore 5 rooms: battles, chests, and Boss. Use items to survive.
-Face enemies and a formidable Boss. Win by defeating the Boss or lose if all your adventurers are defeated.`);
-console.log(`Ready for the adventure?`);
+
+    console.log("\x1b[34mWelcome to the game!\x1b[0m");
+    console.log(`tWelcome to "Dungeon Explorers"! `);
+    console.log(`Choose a group of adventurers from 6 classes. Explore 5 rooms: battles, chests, and Boss. Use items to survive.
+    Face enemies and a formidable Boss. Win by defeating the Boss or lose if all your adventurers are defeated.`);
+    console.log(`Ready for the adventure?`);
 
 
     console.log("\x1b[34mSelect 3 characters for your team:\x1b[0m");
@@ -252,12 +254,10 @@ console.log(`Ready for the adventure?`);
     }
     }
 
+const gameManager = new GameManager();
+gameManager.startGame();
     
-    
-    const gameManager = new GameManager();
-    gameManager.startGame();
-    
-    export default gameManager;
+export default gameManager;
     
 
 
