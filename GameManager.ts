@@ -52,6 +52,25 @@ class GameManager {
         this.makeChoice("Do you want to enter a room or quit the game?", this.enterRoom, this.quit);
     }
 
+    private openChest = async (): Promise<void> => {
+        return new Promise<void>((resolve, reject) => {
+            console.log("Vous trouvez un coffre !");
+            const items = ['demiEtoile', 'Ether', 'MorceauEtoile', 'potion'];
+            const item = items[Math.floor(Math.random() * items.length)];
+
+            const damageChance = Math.random();
+            if (damageChance < 0.7) {
+                console.log("Le coffre était piégé ! Vous subissez des dégâts.");
+                this.selectedCharacters[0].pvcurrent -= this.selectedCharacters[0].pvmax * 0.1;
+                resolve();
+            } else {
+                console.log(`Vous avez trouvé un ${item} dans le coffre !`);
+                this.inventory.push(item);
+                resolve();
+            }
+        });
+    }
+
     private enterRoom = () => {
         console.log("You enter a room.");
         this.combatCount++;
@@ -62,7 +81,9 @@ class GameManager {
         } else if (this.combatCount === 2 || this.combatCount === 4) {
             const openChest = confirm("You found a chest. Do you want to open it?");
             if (openChest) {
-                this.gameLoop();
+                this.openChest().then(() => {
+                    this.gameLoop();
+                });
             } else {
                 console.log("You move on to the next room.");
                 this.gameLoop();
@@ -70,8 +91,7 @@ class GameManager {
         } else if (this.combatCount === 5) {
             this.fightBoss();
         }
-        console.log(this.clearScreen);
-    }
+}
 
     private gameLoop = () => {
         this.checkGameOver()
@@ -83,6 +103,7 @@ class GameManager {
                 process.exit(1); 
             });
     }
+
 
 private checkGameOver = (): Promise<boolean> => {
     return new Promise((resolve, reject) => {
