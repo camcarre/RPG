@@ -30,10 +30,8 @@ class Chest {
             for (let i = 0; i < nbObj; i++) {
                 const randomIndex = Math.floor(Math.random() * obj.length);
                     const objInChest = obj[randomIndex];
-                    
             } 
         }
-        
         console.log('Vous avez trouvé deux objets dans le coffre');
 
       } else {
