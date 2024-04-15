@@ -1,0 +1,2 @@
+Pour lancer le programme il suffie de lancer le fichier GameManager en faisant "deno run GameManager.ts". 
+Celui-ci se trouvant dans le dossier RPG.

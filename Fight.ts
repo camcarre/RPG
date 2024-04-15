@@ -14,8 +14,10 @@ class Fight {
     private clearScreen: string = "\x1b[2J\x1b[0;0H";
     private monsters: Character[] = [];
 
-    constructor(menu: Menu) {
+    constructor(menu: Menu, clearScreen: string, monsters: Character) {
         this.menu = menu;
+        this.clearScreen = clearScreen;
+        this.monsters = monsters;
     }
 
     async startCombat(players: Character[], enemies: Character[], menu: Menu) {
